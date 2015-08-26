@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Concepts &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="index.html"/>
+        <link rel="next" title="Publicly Supported Objects" href="PubliclySupported.html"/>
+        <link rel="prev" title="dragonfluid" href="README.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#additional-features">Additional Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#learn-more">Learn More</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#registration">Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intros">Intros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Concepts</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Concepts.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="concepts">
+<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Dragonfluid is focused on one task &#8211; recognizing the occurrence of commands
+in the middle of a dictation to allow multiple commands to be spoken in a row
+without pauses.</p>
+<p>When a rule is meant to allow passing off to other rules, it looks for
+registered commands embedded in the dictation, and when it encounters one, the
+whole utterance from that first command on is put aside. Once the rule finishes
+processing, usually having put the dictation part of the utterance to use, the
+put aside command portion is then <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed. To the speech recognition system,
+the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a> seems like you just spoke the command right then. And since what was
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed might contain several embedded commands, each rule simply cuts off
+the part meant for it, and forwards the rest.</p>
+</div>
+<div class="section" id="registration">
+<span id="id1"></span><h2>Registration<a class="headerlink" href="#registration" title="Permalink to this headline">¶</a></h2>
+<p>Registration is the recording of rules that are to be noticed when occurring in
+the middle of an utterance. A registry holds this information and is consulted
+when checking to see if an utterance has embedded commands.</p>
+<p>One such registry is the <code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>, which is a type of <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a>
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a>. It can be used across files and the rules will all see each other.
+It&#8217;s a good default choice. If you have a need to isolate some rules, you can
+use a <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code> to hold those rules. A <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code> can be local
+to a single file, or potentially used across a subset of files, but it has no
+awareness of the <code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>.</p>
+<div class="section" id="intros">
+<span id="id2"></span><h3>Intros<a class="headerlink" href="#intros" title="Permalink to this headline">¶</a></h3>
+<p>When a rule is registered, what is actually registered is the initial fixed
+literal text of the command spec, referred to as the <strong>intros</strong>. This process
+is generally automatic, but can be guided. If a spec has only words and no
+special elements, such as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;next page&quot;</span>
+<span class="c"># intros = [&quot;next page&quot;]</span>
+</pre></div>
+</div>
+<p>then the entire command counts as the intro. If a command has any extra
+elements in its spec, the intros stop at the first extra they encounter. For
+instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;go to page &lt;page_number&gt;&quot;</span>
+<span class="c"># intros = [&quot;go to page&quot;]</span>
+</pre></div>
+</div>
+<p>This means that any commands that begin with an extra will have an empty string
+as their intro, and therefore will not be chained to from other commands.</p>
+<p>If you noticed, intros is plural, because there can be many:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;(close|quit)&quot;</span>
+<span class="c"># intros = [&quot;close&quot;, &quot;quit&quot;]</span>
+</pre></div>
+</div>
+<p>And it can get more complex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;(go [to]|at) next line&quot;</span>
+<span class="c"># intros = [&quot;go next line&quot;, &quot;go to next line&quot;, &quot;at next line&quot;]</span>
+</pre></div>
+</div>
+<p>Each intro will be as long as possible until an extra is encountered:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;(insert &lt;part&gt;|delete) below this line&quot;</span>
+<span class="c"># intros = [&quot;insert&quot;, &quot;delete below this line&quot;]</span>
+</pre></div>
+</div>
+<p>Lastly, consider the following scenario:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;copy &lt;direction&gt; word&quot;</span>
+<span class="n">extras</span> <span class="o">=</span> <span class="p">(</span><span class="n">Choice</span><span class="p">(</span><span class="s">&quot;direction&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;left&quot;</span><span class="p">:</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">:</span><span class="s">&quot;right&quot;</span><span class="p">}),</span> <span class="p">)</span>
+<span class="c"># intros = [&quot;copy&quot;]</span>
+</pre></div>
+</div>
+<p>The automatic generation of intros stops at the <code class="docutils literal"><span class="pre">direction</span></code> extra, but we can
+tell that all cases can be determined in advance. The following intros would
+result in less need for literal tags:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">intros</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;copy left word&quot;</span><span class="p">,</span> <span class="s">&quot;copy right word&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Rules that undergo registration allow you to supply the intros directly to
+override the automatically generated ones, either to the __init__ or as a class
+attribute, similar to the spec.</p>
+<p>There is a short cut option called <strong>intro_spec</strong> that, instead of supplying
+individual intros, lets you give a new spec from which to derive them. Our
+original scenario would then look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;copy &lt;direction&gt; word&quot;</span>
+<span class="n">intros_spec</span> <span class="o">=</span> <span class="s">&quot;copy (left|right) word&quot;</span>
+<span class="n">extras</span> <span class="o">=</span> <span class="p">(</span><span class="n">Choice</span><span class="p">(</span><span class="s">&quot;direction&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;left&quot;</span><span class="p">:</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">:</span><span class="s">&quot;right&quot;</span><span class="p">}),</span> <span class="p">)</span>
+<span class="c"># intros = [&quot;copy left word&quot;, &quot;copy right word&quot;]</span>
+</pre></div>
+</div>
+<p>When supplying intros, directly or through intros_spec, you must supply
+appropriate values, for if you have no &#8220;zixo&#8221; command but you place that in a
+list of intros, if &#8220;zixo&#8221; occurs in the middle of an utterance, it will get
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed, match nothing, and depending on your setup, lose the whole rest of
+the utterance which must then be repeated.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="PubliclySupported.html" class="btn btn-neutral float-right" title="Publicly Supported Objects" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="README.html" class="btn btn-neutral" title="dragonfluid" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

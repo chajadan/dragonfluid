@@ -1,0 +1,7 @@
+dist
+tests
+setuptools*
+*.pyc
+.gitattributes
+dragonfluid.egg-info
+dragonfluid/*.txt

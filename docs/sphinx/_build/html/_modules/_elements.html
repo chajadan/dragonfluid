@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>_elements &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#how-to-speak">How To Speak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decorators.html">Decorators</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>_elements</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for _elements</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">dragonfly</span> <span class="kn">import</span> <span class="n">Dictation</span>
+
+<span class="kn">from</span> <span class="nn">dragonfluid._grammars</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span>
+<span class="kn">from</span> <span class="nn">dragonfluid._support</span> <span class="kn">import</span> <span class="n">_safe_kwargs</span>
+
+
+<div class="viewcode-block" id="SplitDictation"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation">[docs]</a><span class="k">class</span> <span class="nc">SplitDictation</span><span class="p">(</span><span class="n">Dictation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A rule element used to split recognized dictation into an initial free</span>
+<span class="sd">    dictation part, and a following command part. Either part is optional,</span>
+<span class="sd">    unless the element is initialized with the forced_dictation element to True.</span>
+<span class="sd">    </span>
+<span class="sd">    The following example shows this element being used and retrieved in the</span>
+<span class="sd">    standard expected way.</span>
+<span class="sd">    </span>
+<span class="sd">    ::</span>
+<span class="sd">    </span>
+<span class="sd">        from dragonfluid import RegistryRule, SplitDictation</span>
+<span class="sd">        </span>
+<span class="sd">        class SplitterRule(RegistryRule):</span>
+<span class="sd">            spec = &quot;set name &lt;name_split&gt;&quot;</span>
+<span class="sd">            extras = (SplitDictation(&quot;name_split&quot;), )</span>
+<span class="sd">            def _process_recognition(self, node, extras):</span>
+<span class="sd">                name_split = extras[&quot;name_split&quot;]</span>
+<span class="sd">                name = name_split.dictation</span>
+<span class="sd">                </span>
+<span class="sd">    The result is a type of container from which parts of the result may be</span>
+<span class="sd">    retrieved. The full list of attributes are individually documented below,</span>
+<span class="sd">    but a simple naming scheme is in place. The first part of the attribute</span>
+<span class="sd">    name indicates the part desired:</span>
+<span class="sd">    </span>
+<span class="sd">    * **full** - The entire utterance</span>
+<span class="sd">    * **dictation** - The utterance only up to the first accepted command, may</span>
+<span class="sd">      be the empty string if the utterance began with an accepted command</span>
+<span class="sd">    * **command** - The rest of the utterance starting with the first accepted</span>
+<span class="sd">      command, through the end of the utterance</span>
+<span class="sd">      </span>
+<span class="sd">    The second part indicates the return type desired:</span>
+<span class="sd">    </span>
+<span class="sd">    * **_words** - A string list of the words</span>
+<span class="sd">    * **_container** - The same type of dictation container that a Dictation</span>
+<span class="sd">      element would yield, some derived class of BaseDictationContainer</span>
+<span class="sd">      as appropriate for the speech recognition system in use.</span>
+<span class="sd">    * *default* - If neither of the above are indicated, the default result type</span>
+<span class="sd">      is a string.</span>
+<span class="sd">      </span>
+<span class="sd">    The third part indicates whether literal tags should be retained or</span>
+<span class="sd">    translated out:</span>
+<span class="sd">    </span>
+<span class="sd">    * **_notrans** - Retain the literal tags</span>
+<span class="sd">    * **_trans** - Strip literal tags and return only the intended content</span>
+<span class="sd">    * *default* - If neither of the above are indicated, the result will have</span>
+<span class="sd">      the default behavior most common when using the part requested. **full** and</span>
+<span class="sd">      **command** parts will retain literal tags, while **dictation** parts will</span>
+<span class="sd">      strip them so as to only return the intended free speech. Default</span>
+<span class="sd">      translation of the parts applies to all return types.</span>
+<span class="sd">      </span>
+<span class="sd">    There is also an issue of formatting. The various dictation containers</span>
+<span class="sd">    have a formatting option. For Windows Speech Recognition there is no real</span>
+<span class="sd">    formatting provided beyond separating words with spaces. Dragon</span>
+<span class="sd">    NaturallySpeaking provides more sophisticated formatting. All return types</span>
+<span class="sd">    except for the **_container** values have formatting applied to the result</span>
+<span class="sd">    returned. If you absolutely do not want the formatting applied, you must</span>
+<span class="sd">    request the containers directly, from which you can choose to apply</span>
+<span class="sd">    formatting or not. If you choose a **_trans** container, it will have had</span>
+<span class="sd">    literal tags stripped, but otherwise be unmodified.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SplitDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span>
+                 <span class="n">forced_dictation</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Here is a test.</span>
+<span class="sd">        </span>
+<span class="sd">        :param string name: The name of this element, used as the keyname in the</span>
+<span class="sd">            extras dictionary passed back to _process_recognition</span>
+<span class="sd">        :param _Registry registry: The _Registry instance that determines what</span>
+<span class="sd">            words form a command</span>
+<span class="sd">        :param Boolean forced_dictation: When True, refuses to recognize</span>
+<span class="sd">            utterance-initial commands, so as to ensure this element returns</span>
+<span class="sd">            non-empty free dictation.</span>
+<span class="sd">        :param kwargs: Passed safely to Dictation.__init__</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forced_dictation</span> <span class="o">=</span> <span class="n">forced_dictation</span>
+        <span class="n">_safe_kwargs</span><span class="p">(</span><span class="n">Dictation</span><span class="o">.</span><span class="n">__init__</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    </div>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node</span> <span class="o">=</span> <span class="n">node</span> <span class="c"># store the context node from which to parse values</span>
+        <span class="c"># clear memoize variables of any previous values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_words_list_memo</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the 0-based word index at which the first accepted full command</span>
+<span class="sd">        intro occurs, or the index beyond last if no such intro occurs. If</span>
+<span class="sd">        forced_dictation was set True during initialization, any</span>
+<span class="sd">        utterance-initial command will be skipped to ensure dictation content</span>
+<span class="sd">        is non-empty.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>        
+            <span class="n">command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forced_dictation</span> <span class="ow">and</span> <span class="n">command_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c"># do not allow empty dictation bypass utterance-initial command</span>
+                <span class="n">next_command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="k">if</span> <span class="n">next_command_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">command_index</span> <span class="o">=</span> <span class="n">next_command_index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># return index beyond last as None indicator</span>
+                    <span class="n">command_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span> <span class="o">=</span> <span class="n">command_index</span>             
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span>
+    
+<div class="viewcode-block" id="SplitDictation.translate"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words_iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a word list, as translated.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">translate_literals</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>    
+    </div>
+    <span class="k">def</span> <span class="nf">mimic_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">mimic_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>    
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_notrans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a string, with formatting applied and with</span>
+<span class="sd">        literal tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a string, with formatting applied and with</span>
+<span class="sd">        literal tags translated to their intended result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_trans</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_words_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a word list, with formatting applied and</span>
+<span class="sd">        with literal tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_words_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a word list, with formatting applied and</span>
+<span class="sd">        with literal tags translated to their intended result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_container_notrans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_container_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a BaseDictationContainer of the</span>
+<span class="sd">        appropriate type given the speech recognition system in use, without</span>
+<span class="sd">        any alterations of any sort applied to the container contents. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">())</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_container_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the full content, as a BaseDictationContainer of the</span>
+<span class="sd">        appropriate type given the speech recognition system in use, with no</span>
+<span class="sd">        formatting applied yet with literal tags translated to their intended result. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>
+        <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()</span>
+        <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_trans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a string with formatting and with literal tags</span>
+<span class="sd">        translated to their intended result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_trans</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a string with formatting and with literal tags</span>
+<span class="sd">        retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>      
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_trans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_words_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a word list with formatting and with literal</span>
+<span class="sd">        tags translated to their intended result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_words_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a word list with formatting and with literal</span>
+<span class="sd">        tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">]</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_container_trans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_container_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a BaseDictationContainer of the appropriate type</span>
+<span class="sd">        given the speech recognition system in use, without any alterations</span>
+<span class="sd">        of any sort applied to the container contents. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[:</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">])</span>    
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictation_container_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content up to the first full command intro, if any.</span>
+<span class="sd">        Content is returned as a BaseDictationContainer of the appropriate type</span>
+<span class="sd">        given the speech recognition system in use, with no formatting applied</span>
+<span class="sd">        yet with literal tags translated to their intended result.   </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
+        <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[:</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">]</span>
+        <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_notrans</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a string with formatting and with literal</span>
+<span class="sd">        tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a string with formatting and with literal</span>
+<span class="sd">        tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_trans</span><span class="p">)</span>    
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_words_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a word list with formatting and with</span>
+<span class="sd">        literal tags retained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">:]</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_words_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a word list with formatting and with</span>
+<span class="sd">        literal tags translated to their intended result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words</span><span class="p">)</span>    
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_container_notrans</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_container_notrans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a BaseDictationContainer of the appropriate</span>
+<span class="sd">        type given the speech recognition system in use, without any</span>
+<span class="sd">        alterations of any sort applied to the container contents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">:])</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_container_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns any and all content starting from first full command intro, if</span>
+<span class="sd">        any. Content is returned as a BaseDictationContainer of the appropriate</span>
+<span class="sd">        type given the speech recognition system in use, with no formatting</span>
+<span class="sd">        applied yet with literal tags translated to their intended result.  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span><span class="p">)</span>
+        <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">:]</span>
+        <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>    
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_formatted_words_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;_formatted_words_list_memo&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list_memo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">())</span><span class="o">.</span><span class="n">format</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list_memo</span>
+
+</div>
+<div class="viewcode-block" id="SplitForcedDictation"><a class="viewcode-back" href="../Elements.html#_elements.SplitForcedDictation">[docs]</a><span class="k">class</span> <span class="nc">SplitForcedDictation</span><span class="p">(</span><span class="n">SplitDictation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A SplitDictation with forced_dictation set to True, guaranteed to return</span>
+<span class="sd">    a value for dictation, even if it must ignore an utterance-initial command</span>
+<span class="sd">    from which to provide it.  </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SplitForcedDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitForcedDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;kwargs passed to SplitDictation&quot;&quot;&quot;</span>
+        <span class="c"># ensure only one forced_dictation argument passed</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;forced_dictation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">SplitDictation</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">registry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

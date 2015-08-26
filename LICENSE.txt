@@ -1,0 +1,95 @@
+
+No Force From Freedom License - Version 1
+
+This is burdenless and unencumbered code that belongs to all, released under the
+No Force From Freedom license, a public domain license. There are no
+obligations. There are no restricted use cases. And especially, there is no
+right to turn these freedoms into additional force, compulsion, or burden upon
+any party. The code belongs to all equally and inseverably.
+
+
+This is burdenless code. There are no obligations to use this code or new
+liabilities generated in doing so. The code is yours. No use of the code
+requires additional action by any party. This includes disclosure of any sort,
+including attribution, open source, or even transmission of this very license.
+This license places no requirements or contingencies on any other license. There
+is no burden upon any entity to ensure access to the code or anything regarding
+the code.
+
+
+This is unencumbered code. There are no restricted use cases. The code is yours
+to replicate, change, distribute, sell, or use, in any form, for any purpose, at
+any time. Use of the code by any party is always inherently rightful in any
+context.
+
+
+There is no right to turn these freedoms into force, compulsion, or burden upon
+any party under any circumstances. The code is also theirs, equally and
+inseverably. No party has authority to use legal force or the threat of such
+force to circumvent any right declared herein to belong to all parties, nor to
+recover perceived damages only involving the manifestation of such rights. The
+code cannot be stolen even when put up for sale, with the extent of valid legal
+action limited only to any legally protected right, such as that of private
+property, physical or intellectual, or any right to privacy and freedom from
+unlawful trespassing. Targeted reverse engineering which only yields the code is
+the right of all, with the extent of valid legal action limited only to any
+retained legal right preventing reverse engineering of any other protected code.
+The use of any product that incorporates the code is not actionable under law so
+long as the use only invokes elements of the code, with the extent of valid
+legal action limited only to the invocation of some other protected code in the
+event such invocation is not functionally a no-op and is not free from liability
+or restriction. The list of legal actions that can not be taken is suggestive
+and not exhaustive, and any valid legal action taken must defend at least one or
+more elements other than, and only any elements other than, the code, its
+inherently burden free use, or the manifestation and/or expression of any right
+of freedom declared here to rightfully belong to all parties.
+
+
+In jurisdictions that recognize copyright laws, the author or authors of the
+code dedicate any and all copyright interest in the code to all equally and
+inseverably, including any person, entity, or group, human or non-human, which
+ever wishes to exercise their rightful ownership. We make this dedication for
+the benefit of the universe at large and to the detriment of no party, since we
+have deprived our heirs and successors of nothing, rather guaranteeing them
+equal freedom of use to what we as authors ever possessed, even if not having
+the means to ensure their access or introduction, as we ourselves are unable to
+ensure our own continued and uninterrupted holdings, since no party is
+responsible to ensure access or copy nor ever was. We intend this dedication to
+be an overt act of relinquishment in perpetuity of all present and future
+exclusionary rights to the code under copyright law while not relinquishing our
+full ownership equally and inseverably with all others.
+
+
+We wish to make it known that the No Force From Freedom license is the result of
+placing value in freedom and denouncing enslavement. We do not accept that
+actions made through freedom and choice may somehow bestow a right to force,
+control, intimidate, or enslave. We recognize that freedoms should not birth
+shackles, and that no third party can ever rightfully grant a party the power to
+introduce force or control when all culminating events occurred only through
+freedom and choice. We apply this value here to the code, recognizing its
+applicability, that we used freedom and choice to create the code, freedom and
+choice to expose the code to your eyes here, and freedom and choice to state our
+wishes and expectations in relation to the code, and that these freedoms and
+choices should not suddenly birth a "right" or authority to force, punish, hold
+liable, limit, or enslave. When convention allows wielding of control against
+some group or party for the pure direct benefit of only some other group or
+party, slavery is present, and this we denounce.
+
+
+THE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE CODE OR THE
+USE OR OTHER DEALINGS IN THE CODE.
+
+
+THE LICENSE NEITHER GRANTS NOR COULD GRANT ANY PARTY A FREEDOM TO BREAK LAW OR
+DO HARM, NO MATTER HOW MANY FREEDOMS OR LACK OF RESTRICTIONS IT SPECIFIES,
+INVOKES, IMPLIES, DEFENDS, OR CHAMPIONS. THE LICENSE DOES NOT SUGGEST EXISTING
+LAW IS RELAXED OR NON-APPLICABLE. THIS LICENSE DOES NOT COUNTERACT OR ALTER ANY
+EXISTING LAW. THE LICENSE IS NOT A FOUNDATION UPON WHICH TO DETERMINE AN
+EXISTING LAW NON-APPLICABLE IN ANY CONTEXT. IN NO EVENT TO THE EXTENT POSSIBLE
+BY LAW SHALL THE LICENSE, ITS AUTHORS, OR ITS WIELDERS BE LIABLE FOR ACTIONS
+TAKEN BY OTHERS WHO ERRONEOUSLY BELIEVE THE LICENSE RELIEVES THEM OF ANY LEGAL
+OBLIGATION OR REPERCUSSIONS.

@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Elements &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="index.html"/>
+        <link rel="next" title="Rules" href="Rules.html"/>
+        <link rel="prev" title="Grammars" href="Grammars.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#additional-features">Additional Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#learn-more">Learn More</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grammars.html">Grammars</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Elements</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Elements.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-_elements">
+<span id="elements"></span><h1>Elements<a class="headerlink" href="#module-_elements" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_elements.SplitDictation">
+<em class="property">class </em><code class="descname">SplitDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rule element used to split recognized dictation into an initial free
+dictation part, and a following command part. Either part is optional,
+unless the element is initialized with the forced_dictation element to True.</p>
+<p>The following example shows this element being used and retrieved in the
+standard expected way.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">dragonfluid</span> <span class="kn">import</span> <span class="n">RegistryRule</span><span class="p">,</span> <span class="n">SplitDictation</span>
+
+<span class="k">class</span> <span class="nc">SplitterRule</span><span class="p">(</span><span class="n">RegistryRule</span><span class="p">):</span>
+    <span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;set name &lt;name_split&gt;&quot;</span>
+    <span class="n">extras</span> <span class="o">=</span> <span class="p">(</span><span class="n">SplitDictation</span><span class="p">(</span><span class="s">&quot;name_split&quot;</span><span class="p">),</span> <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">):</span>
+        <span class="n">name_split</span> <span class="o">=</span> <span class="n">extras</span><span class="p">[</span><span class="s">&quot;name_split&quot;</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name_split</span><span class="o">.</span><span class="n">dictation</span>
+</pre></div>
+</div>
+<p>The result is a type of container from which parts of the result may be
+retrieved. The full list of attributes are individually documented below,
+but a simple naming scheme is in place. The first part of the attribute
+name indicates the part desired:</p>
+<ul class="simple">
+<li><strong>full</strong> - The entire utterance</li>
+<li><strong>dictation</strong> - The utterance only up to the first accepted command, may
+be the empty string if the utterance began with an accepted command</li>
+<li><strong>command</strong> - The rest of the utterance starting with the first accepted
+command, through the end of the utterance</li>
+</ul>
+<p>The second part indicates the return type desired:</p>
+<ul class="simple">
+<li><strong>_words</strong> - A string list of the words</li>
+<li><strong>_container</strong> - The same type of dictation container that a Dictation
+element would yield, some derived class of BaseDictationContainer
+as appropriate for the speech recognition system in use.</li>
+<li><em>default</em> - If neither of the above are indicated, the default result type
+is a string.</li>
+</ul>
+<p>The third part indicates whether literal tags should be retained or
+translated out:</p>
+<ul class="simple">
+<li><strong>_notrans</strong> - Retain the literal tags</li>
+<li><strong>_trans</strong> - Strip literal tags and return only the intended content</li>
+<li><em>default</em> - If neither of the above are indicated, the result will have
+the default behavior most common when using the part requested. <strong>full</strong> and
+<strong>command</strong> parts will retain literal tags, while <strong>dictation</strong> parts will
+strip them so as to only return the intended free speech. Default
+translation of the parts applies to all return types.</li>
+</ul>
+<p>There is also an issue of formatting. The various dictation containers
+have a formatting option. For Windows Speech Recognition there is no real
+formatting provided beyond separating words with spaces. Dragon
+NaturallySpeaking provides more sophisticated formatting. All return types
+except for the <strong>_container</strong> values have formatting applied to the result
+returned. If you absolutely do not want the formatting applied, you must
+request the containers directly, from which you can choose to apply
+formatting or not. If you choose a <strong>_trans</strong> container, it will have had
+literal tags stripped, but otherwise be unmodified.</p>
+<dl class="method">
+<dt id="_elements.SplitDictation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here is a test.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The name of this element, used as the keyname in the
+extras dictionary passed back to _process_recognition</li>
+<li><strong>registry</strong> (<em>_Registry</em>) &#8211; The _Registry instance that determines what
+words form a command</li>
+<li><strong>forced_dictation</strong> (<em>Boolean</em>) &#8211; When True, refuses to recognize
+utterance-initial commands, so as to ensure this element returns
+non-empty free dictation.</li>
+<li><strong>kwargs</strong> &#8211; Passed safely to Dictation.__init__</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_index">
+<code class="descname">command_index</code><a class="headerlink" href="#_elements.SplitDictation.command_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the 0-based word index at which the first accepted full command
+intro occurs, or the index beyond last if no such intro occurs. If
+forced_dictation was set True during initialization, any
+utterance-initial command will be skipped to ensure dictation content
+is non-empty.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_elements.SplitDictation.translate">
+<code class="descname">translate</code><span class="sig-paren">(</span><em>words_iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a word list, as translated.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_notrans">
+<code class="descname">full_notrans</code><a class="headerlink" href="#_elements.SplitDictation.full_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a string, with formatting applied and with
+literal tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_trans">
+<code class="descname">full_trans</code><a class="headerlink" href="#_elements.SplitDictation.full_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a string, with formatting applied and with
+literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_words_notrans">
+<code class="descname">full_words_notrans</code><a class="headerlink" href="#_elements.SplitDictation.full_words_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a word list, with formatting applied and
+with literal tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_words_trans">
+<code class="descname">full_words_trans</code><a class="headerlink" href="#_elements.SplitDictation.full_words_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a word list, with formatting applied and
+with literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_container_notrans">
+<code class="descname">full_container_notrans</code><a class="headerlink" href="#_elements.SplitDictation.full_container_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a BaseDictationContainer of the
+appropriate type given the speech recognition system in use, without
+any alterations of any sort applied to the container contents.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_container_trans">
+<code class="descname">full_container_trans</code><a class="headerlink" href="#_elements.SplitDictation.full_container_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full content, as a BaseDictationContainer of the
+appropriate type given the speech recognition system in use, with no
+formatting applied yet with literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_trans">
+<code class="descname">dictation_trans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a string with formatting and with literal tags
+translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_notrans">
+<code class="descname">dictation_notrans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a string with formatting and with literal tags
+retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_words_trans">
+<code class="descname">dictation_words_trans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_words_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a word list with formatting and with literal
+tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_words_notrans">
+<code class="descname">dictation_words_notrans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_words_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a word list with formatting and with literal
+tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_container_notrans">
+<code class="descname">dictation_container_notrans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_container_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a BaseDictationContainer of the appropriate type
+given the speech recognition system in use, without any alterations
+of any sort applied to the container contents.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_container_trans">
+<code class="descname">dictation_container_trans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_container_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content up to the first full command intro, if any.
+Content is returned as a BaseDictationContainer of the appropriate type
+given the speech recognition system in use, with no formatting applied
+yet with literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_notrans">
+<code class="descname">command_notrans</code><a class="headerlink" href="#_elements.SplitDictation.command_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a string with formatting and with literal
+tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_trans">
+<code class="descname">command_trans</code><a class="headerlink" href="#_elements.SplitDictation.command_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a string with formatting and with literal
+tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_words_notrans">
+<code class="descname">command_words_notrans</code><a class="headerlink" href="#_elements.SplitDictation.command_words_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a word list with formatting and with
+literal tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_words_trans">
+<code class="descname">command_words_trans</code><a class="headerlink" href="#_elements.SplitDictation.command_words_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a word list with formatting and with
+literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_container_notrans">
+<code class="descname">command_container_notrans</code><a class="headerlink" href="#_elements.SplitDictation.command_container_notrans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a BaseDictationContainer of the appropriate
+type given the speech recognition system in use, without any
+alterations of any sort applied to the container contents.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_container_trans">
+<code class="descname">command_container_trans</code><a class="headerlink" href="#_elements.SplitDictation.command_container_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns any and all content starting from first full command intro, if
+any. Content is returned as a BaseDictationContainer of the appropriate
+type given the speech recognition system in use, with no formatting
+applied yet with literal tags translated to their intended result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="_elements.SplitForcedDictation">
+<em class="property">class </em><code class="descname">SplitForcedDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SplitDictation with forced_dictation set to True, guaranteed to return
+a value for dictation, even if it must ignore an utterance-initial command
+from which to provide it.</p>
+<dl class="method">
+<dt id="_elements.SplitForcedDictation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>kwargs passed to SplitDictation</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Rules.html" class="btn btn-neutral float-right" title="Rules" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Grammars.html" class="btn btn-neutral" title="Grammars" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

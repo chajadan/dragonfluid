@@ -1,0 +1,1153 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dragonfly.grammar.elements_basic &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../../index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#how-to-speak">How To Speak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts.html#registration">Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Concepts.html#intros">Intros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Decorators.html">Decorators</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>dragonfly.grammar.elements_basic</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for dragonfly.grammar.elements_basic</h1><div class="highlight"><pre>
+<span class="c">#</span>
+<span class="c"># This file is part of Dragonfly.</span>
+<span class="c"># (c) Copyright 2007, 2008 by Christo Butcher</span>
+<span class="c"># Licensed under the LGPL.</span>
+<span class="c">#</span>
+<span class="c">#   Dragonfly is free software: you can redistribute it and/or modify it </span>
+<span class="c">#   under the terms of the GNU Lesser General Public License as published </span>
+<span class="c">#   by the Free Software Foundation, either version 3 of the License, or </span>
+<span class="c">#   (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#   Dragonfly is distributed in the hope that it will be useful, but </span>
+<span class="c">#   WITHOUT ANY WARRANTY; without even the implied warranty of </span>
+<span class="c">#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU </span>
+<span class="c">#   Lesser General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#   You should have received a copy of the GNU Lesser General Public </span>
+<span class="c">#   License along with Dragonfly.  If not, see </span>
+<span class="c">#   &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Fundamental element classes</span>
+<span class="sd">============================================================================</span>
+
+<span class="sd">Dragonfly grammars are built up out of a small set of fundamental building </span>
+<span class="sd">blocks.  These building blocks are implemented by the following *element* </span>
+<span class="sd">classes:</span>
+
+<span class="sd"> - :class:`ElementBase` --</span>
+<span class="sd">   the base class from which all other element classes are derived</span>
+<span class="sd"> - :class:`Sequence` --</span>
+<span class="sd">   sequence of child elements which must all match in the order given</span>
+<span class="sd"> - :class:`Alternative` --</span>
+<span class="sd">   list of possibilities of which only one will be matched</span>
+<span class="sd"> - :class:`Optional` --</span>
+<span class="sd">   wrapper around a child element which makes the child element optional</span>
+<span class="sd"> - :class:`Repetition` --</span>
+<span class="sd">   repetition of a child element</span>
+<span class="sd"> - :class:`Literal` --</span>
+<span class="sd">   literal word which must be said exactly by the speaker as given</span>
+<span class="sd"> - :class:`RuleRef` --</span>
+<span class="sd">   reference to a :class:`dragonfly.grammar.rule_base.Rule` object;</span>
+<span class="sd">   this element allows a rule to include (i.e. reference) another rule</span>
+<span class="sd"> - :class:`ListRef` --</span>
+<span class="sd">   reference to a :class:`dragonfly.grammar.list.List` object</span>
+
+<span class="sd">The following *element* classes are built up out of the fundamental </span>
+<span class="sd">classes listed above:</span>
+
+<span class="sd"> - :class:`Dictation` --</span>
+<span class="sd">   free-form dictation; this element matches any words the speaker says,</span>
+<span class="sd">   and includes facilities for formatting the spoken words with correct</span>
+<span class="sd">   spacing and capitalization</span>
+<span class="sd"> - :class:`DictListRef` --</span>
+<span class="sd">   reference to a :class:`dragonfly.all.DictList` object; this element is </span>
+<span class="sd">   similar to the :class:`dragonfly.all.ListRef` element, except that it </span>
+<span class="sd">   returns the value associated with the spoken words instead of the </span>
+<span class="sd">   spoken words themselves</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">.rule_base</span>  <span class="kn">import</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">.list</span>       <span class="kn">import</span> <span class="n">ListBase</span><span class="p">,</span> <span class="n">DictList</span>
+
+
+<span class="c">#===========================================================================</span>
+<span class="c"># Element base class.</span>
+
+<span class="k">class</span> <span class="nc">ElementBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Base class for all other element classes. &quot;&quot;&quot;</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;uninitialized&quot;</span>
+
+    <span class="n">_log_decode</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;grammar.decode&quot;</span><span class="p">)</span>
+    <span class="n">_log_eval</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;grammar.eval&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructor argument:</span>
+<span class="sd">             - *name* (*str*, default: *None*) --</span>
+<span class="sd">               the name of this element; can be used when interpreting</span>
+<span class="sd">               complex recognition for retrieving elements by name.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default</span> <span class="o">=</span> <span class="n">default</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>   <span class="n">name_str</span> <span class="o">=</span> <span class="s">&quot;, name=</span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>           <span class="n">name_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">(...</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name_str</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns an iterable of this element&#39;s children.</span>
+
+<span class="sd">            This method is used by the :meth:`.children` property, and</span>
+<span class="sd">            should be overloaded by any derived classes to give</span>
+<span class="sd">            the correct children element.</span>
+
+<span class="sd">            By default, this method returns an empty tuple.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">()</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_children</span><span class="p">(),</span>
+                        <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Iterable of child elements.  (Read-only)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">element_tree_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a formatted multi-line string representing this</span>
+<span class="sd">            element and its children.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="s">&quot;  &quot;</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">element</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tree</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">element</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">index</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">element</span><span class="p">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">element</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">(</span><span class="n">indent</span><span class="o">*</span><span class="n">depth</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">depth</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns an iterable containing the dependencies of this</span>
+<span class="sd">            element and of this element&#39;s children.</span>
+
+<span class="sd">            The dependencies are the objects that are necessary</span>
+<span class="sd">            for this element.  These include lists and other rules.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">dependencies</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dependencies</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compiler</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Call to virtual method compile()&quot;</span>
+                                  <span class="s">&quot; in base class ElementBase&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a formatted grammar string of the contents</span>
+<span class="sd">            of this element and its children.</span>
+
+<span class="sd">            The grammar string is of a format similar to that used</span>
+<span class="sd">            by Natlink to define its grammars.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Call to virtual method gstring()&quot;</span>
+                                  <span class="s">&quot; in base class ElementBase&quot;</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Attempt to decode the recognition stored in the given *state*.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Call to virtual method decode()&quot;</span>
+                                  <span class="s">&quot; in base class ElementBase&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Determine the semantic value of this element given the</span>
+<span class="sd">            recognition results stored in the *node*.</span>
+
+<span class="sd">            Argument:</span>
+<span class="sd">             - *node* --</span>
+<span class="sd">               a :class:`dragonfly.grammar.state.Node` instance</span>
+<span class="sd">               representing this element within the recognition</span>
+<span class="sd">               parse tree</span>
+
+<span class="sd">            The default behavior of this method is to return</span>
+<span class="sd">            an iterable containing the recognized words matched</span>
+<span class="sd">            by this element (i.e. *node.words()*).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">words</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">has_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Internal utility methods for use by derived classes.</span>
+
+    <span class="k">def</span> <span class="nf">_copy_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">item_types</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Utility function for derived classes that checks that a given </span>
+<span class="sd">            object is a sequence, copies its contents into a new tuple, </span>
+<span class="sd">            and checks that each item is of a given type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> object must be a sequence.&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item_types</span><span class="p">:</span> <span class="k">return</span> <span class="n">result</span>
+
+        <span class="n">invalid</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">result</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">item_types</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">invalid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> object must contain only </span><span class="si">%s</span><span class="s"> types.&quot;</span>
+                            <span class="s">&quot;  (Received </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">item_types</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="c">#===========================================================================</span>
+<span class="c"># Basic structural element classes.</span>
+
+<span class="k">class</span> <span class="nc">Sequence</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Element class representing a sequence of child elements</span>
+<span class="sd">        which must all match a recognition in the correct order.</span>
+
+<span class="sd">        Constructor arguments:</span>
+<span class="sd">         - *children* (iterable, default: *()*) --</span>
+<span class="sd">           the child elements of this element</span>
+<span class="sd">         - *name* (*str*, default: *None*) --</span>
+<span class="sd">           the name of this element</span>
+
+<span class="sd">        For a recognition to match, all child elements must match</span>
+<span class="sd">        the recognition in the order that they were given in the</span>
+<span class="sd">        *children* constructor argument.</span>
+
+<span class="sd">        Example usage:</span>
+<span class="sd">        &gt;&gt;&gt; from dragonfly.test import ElementTester</span>
+<span class="sd">        &gt;&gt;&gt; seq = Sequence([Literal(&quot;hello&quot;), Literal(&quot;world&quot;)])</span>
+<span class="sd">        &gt;&gt;&gt; test_seq = ElementTester(seq)</span>
+<span class="sd">        &gt;&gt;&gt; test_seq.recognize(&quot;hello world&quot;)</span>
+<span class="sd">        [&#39;hello&#39;, &#39;world&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; test_seq.recognize(&quot;hello universe&quot;)</span>
+<span class="sd">        RecognitionFailure</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy_sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span>
+                                             <span class="s">&quot;children&quot;</span><span class="p">,</span> <span class="n">ElementBase</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">_get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the child elements contained within the sequence. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">:</span>
+            <span class="n">dependencies</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dependencies</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;(&quot;</span> \
+             <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">gstring</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">))</span> \
+             <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Special case for an empty sequence.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">state</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># Attempt to walk a path through the entire sequence of children</span>
+        <span class="c">#  so that each one decodes successfully.</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">)]</span>
+        <span class="k">while</span> <span class="n">path</span><span class="p">:</span>
+            <span class="c"># Allow the last child to attempt decoding.</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="c"># Last child failed to decode, remove from path to</span>
+                <span class="c">#  allowed the one-before-last child to reattempt.</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Last child successfully decoded.</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">):</span>
+                    <span class="c"># Sequence not yet complete, append the next child.</span>
+                    <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># Sequence complete, all children decoded successfully.</span>
+                    <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">state</span>
+                    <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Sequence of children could not all decode successfully: failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The *value* of a :class:`Sequence` is a list containing</span>
+<span class="sd">            the values of each of its children.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Optional</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Element class representing an optional child element.</span>
+
+<span class="sd">        Constructor arguments:</span>
+<span class="sd">         - *child* (*ElementBase*) --</span>
+<span class="sd">           the child element of this element</span>
+<span class="sd">         - *name* (*str*, default: *None*) --</span>
+<span class="sd">           the name of this element</span>
+
+<span class="sd">        Recognitions always match this element.  If the child element</span>
+<span class="sd">        does match the recognition, then that result is used.</span>
+<span class="sd">        Otherwise, this element itself does match but the child</span>
+<span class="sd">        is not processed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ElementBase</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Child of </span><span class="si">%s</span><span class="s"> object must be an&quot;</span>
+                            <span class="s">&quot; ElementBase instance.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child</span> <span class="o">=</span> <span class="n">child</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_greedy</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">_get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the optional child element. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;[&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="o">.</span><span class="n">gstring</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># If in greedy mode, allow the child to decode before.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_greedy</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">state</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="c"># Rollback decoding so that the null-decode can be yielded.</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Yield the null-decode possibility.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">state</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># If not in greedy mode, allow the child to decode after.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_greedy</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">state</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># No more decoding possibilities available, failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The *value* of a :class:`Optional` is the value of its child,</span>
+<span class="sd">            if the child did match the recognition.  Otherwise the</span>
+<span class="sd">            *value* is *None*.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Alternative</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Element class representing several child elements of which only</span>
+<span class="sd">        one will match.</span>
+
+<span class="sd">        Constructor arguments:</span>
+<span class="sd">         - *children* (iterable, default: *()*) --</span>
+<span class="sd">           the child elements of this element</span>
+<span class="sd">         - *name* (*str*, default: *None*) --</span>
+<span class="sd">           the name of this element</span>
+
+<span class="sd">        For a recognition to match, at least one of the child elements</span>
+<span class="sd">        must match the recognition.  The first matching child is</span>
+<span class="sd">        used.  Child elements are searched in the order they are given</span>
+<span class="sd">        in the *children* constructor argument.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_copy_sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span>
+                                             <span class="s">&quot;children&quot;</span><span class="p">,</span> <span class="n">ElementBase</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">_get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the alternative child elements. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;(&quot;</span> \
+             <span class="o">+</span> <span class="s">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">gstring</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">))</span> \
+             <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">:</span>
+            <span class="n">dependencies</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dependencies</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Special case for an empty list of alternatives.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">state</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># Iterate through the children.</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">:</span>
+
+            <span class="c"># Iterate through this child&#39;s possible decoding states.</span>
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">state</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="c"># Rollback to the alternative&#39;s original state, so that the</span>
+            <span class="c">#  next child starts decoding without interference from the</span>
+            <span class="c">#  previous child.</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># None of the children could decode successfully: failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The *value* of an :class:`Alternative` is the value of its</span>
+<span class="sd">            child that matched the recognition.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Repetition</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Element class representing a repetition of one child element.</span>
+
+<span class="sd">        Constructor arguments:</span>
+<span class="sd">         - *child* (*ElementBase*) --</span>
+<span class="sd">           the child element of this element</span>
+<span class="sd">         - *min* (*int*, default: *1*) --</span>
+<span class="sd">           the minimum number of times that the child element must</span>
+<span class="sd">           be recognized; may be 0</span>
+<span class="sd">         - *max* (*int*, default: *None*) --</span>
+<span class="sd">           the maximum number of times that the child element must</span>
+<span class="sd">           be recognized; if *None*, the child element must be recognized</span>
+<span class="sd">           exactly *min* times (i.e. *max = min + 1*)</span>
+<span class="sd">         - *name* (*str*, default: *None*) --</span>
+<span class="sd">           the name of this element</span>
+
+<span class="sd">        For a recognition to match, at least one of the child elements</span>
+<span class="sd">        must match the recognition.  The first matching child is</span>
+<span class="sd">        used.  Child elements are searched in the order they are given</span>
+<span class="sd">        in the *children* constructor argument.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ElementBase</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Child of </span><span class="si">%s</span><span class="s"> object must be an&quot;</span>
+                            <span class="s">&quot; ElementBase instance.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">max</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">max</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">min</span> <span class="o">&lt;</span> <span class="nb">max</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child</span> <span class="o">=</span> <span class="n">child</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">=</span> <span class="nb">min</span>
+        <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">=</span> <span class="nb">min</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>           <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">=</span> <span class="nb">max</span>
+
+        <span class="n">optional_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">optional_length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">optional_length</span><span class="p">):</span>
+                <span class="n">element</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">Sequence</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="n">element</span><span class="p">]))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">+</span> <span class="p">[</span><span class="n">element</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Repetition not allowed to be empty.&quot;</span><span class="p">)</span>
+
+        <span class="n">Sequence</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">get_repetitions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns a list containing the nodes associated with</span>
+<span class="sd">            each repetition of this element&#39;s child element.</span>
+
+<span class="sd">            Argument:</span>
+<span class="sd">             - *node* (*Node*) --</span>
+<span class="sd">               the parse tree node associated with this repetition element;</span>
+<span class="sd">               necessary for searching for child elements within the parse</span>
+<span class="sd">               tree</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repetitions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_min</span><span class="p">):</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">actor</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Invalid child of </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> \
+                    <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">actor</span><span class="p">))</span>
+            <span class="n">repetitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">optional</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="n">optional</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">actor</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+                    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+                    <span class="n">element</span><span class="p">,</span> <span class="n">optional</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">children</span>
+                    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">actor</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Invalid child of </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> \
+                            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">actor</span><span class="p">))</span>
+                    <span class="n">repetitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">actor</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span><span class="p">:</span>
+                    <span class="n">repetitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Invalid child of </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> \
+                        <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">actor</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">repetitions</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The *value* of a :class:`Repetition` is a list containing</span>
+<span class="sd">            the values of its child.</span>
+
+<span class="sd">            The length of this list is equal to the number of times</span>
+<span class="sd">            that the child element was recognized.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repetitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_repetitions</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">repetitions</span><span class="p">]</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Literal</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Text of </span><span class="si">%s</span><span class="s"> object must be a&quot;</span>
+                            <span class="s">&quot; string.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">(</span><span class="si">%r</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span><span class="p">)</span>
+
+    <span class="n">words</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_words</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_words</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Iterate through this element&#39;s words.</span>
+        <span class="c"># If all match, success.  Else, failure.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_words</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">word</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_words</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="c"># All words matched, success.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_words</span><span class="p">))</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">state</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Only one decoding possibility, failure on retry.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">u&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">words</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">RuleRef</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">Rule</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Rule object of </span><span class="si">%s</span><span class="s"> object must be a&quot;</span>
+                            <span class="s">&quot; Dragonfly rule.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span> <span class="o">=</span> <span class="n">rule</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;_rule&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ElementBase</span><span class="o">.</span><span class="n">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">rule</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">memo</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;&gt;&quot;</span>
+
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Allow the rule to attempt decoding.</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">state</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># The rule failed to deliver a valid decoding, failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">ListRef</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">ListBase</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;List argument to </span><span class="si">%s</span><span class="s"> constructor must be a&quot;</span>
+                            <span class="s">&quot; Dragonfly list.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime introspection.</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">:</span>
+            <span class="n">arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;key=</span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arguments</span><span class="p">))</span>
+
+    <span class="nb">list</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compiler</span><span class="p">):</span>
+        <span class="n">compiler</span><span class="o">.</span><span class="n">add_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;}&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># If the next word(s) is/are in the list, success.</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">word</span><span class="p">()</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="n">delta</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">state</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">word</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">next</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">word</span> <span class="o">+=</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="nb">next</span>
+
+        <span class="c"># If the word is not in the list, or on retry, failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">words</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">DictListRef</span><span class="p">(</span><span class="n">ListRef</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">DictList</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Dict object of </span><span class="si">%s</span><span class="s"> object must be a&quot;</span>
+                            <span class="s">&quot; Dragonfly DictList.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">ListRef</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">ListRef</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Empty</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compiler</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;Empty()&gt;&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">state</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+
+<span class="c">#===========================================================================</span>
+<span class="c"># Slightly more complex element classes.</span>
+
+<span class="k">class</span> <span class="nc">Dictation</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_format_words</span> <span class="o">=</span> <span class="n">format</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">(</span><span class="si">%r</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">()&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;Dictation()&gt;&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Check that at least one word has been dictated, otherwise feel.</span>
+        <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">rule</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&quot;dgndictation&quot;</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># Determine how many words have been dictated.</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">state</span><span class="o">.</span><span class="n">rule</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;dgndictation&quot;</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c"># Yield possible states where the number of dictated words</span>
+        <span class="c"># gobbled is decreased by 1 between yields.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_success</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">state</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">decode_rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># None of the possible states were accepted, failure.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">words</span><span class="p">())</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">Impossible</span><span class="p">(</span><span class="n">ElementBase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">ElementBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for load-time setup.</span>
+
+    <span class="k">def</span> <span class="nf">gstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;Impossible()&gt;&quot;</span>
+
+    <span class="c">#-----------------------------------------------------------------------</span>
+    <span class="c"># Methods for runtime recognition processing.</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">decode_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="c">#---------------------------------------------------------------------------</span>
+
+<span class="k">class</span> <span class="nc">RuleWrap</span><span class="p">(</span><span class="n">RuleRef</span><span class="p">):</span>
+
+    <span class="n">_next_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">rule_name</span> <span class="o">=</span> <span class="s">&quot;_</span><span class="si">%s</span><span class="s">_</span><span class="si">%02d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">RuleWrap</span><span class="o">.</span><span class="n">_next_id</span><span class="p">)</span>
+        <span class="n">RuleWrap</span><span class="o">.</span><span class="n">_next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">rule</span> <span class="o">=</span> <span class="n">Rule</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rule_name</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">RuleRef</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

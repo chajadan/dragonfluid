@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dragonfluid &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="index.html"/>
+        <link rel="next" title="Concepts" href="Concepts.html"/>
+        <link rel="prev" title="Welcome to dragonfluid’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-speak">How To Speak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>dragonfluid</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/README.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="dragonfluid">
+<h1>dragonfluid<a class="headerlink" href="#dragonfluid" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>The dragonfluid library is a simple extension to <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a>, a library to
+create voice commands  or &#8216;macros&#8217; that work with Dragon NaturallySpeaking or
+Windows Speech Recognition. dragonfluid adds &#8220;out of the box&#8221;
+support for speaking multiple commands in a row without pausing.</p>
+</div>
+<div class="section" id="it-s-not-for-everyone">
+<h2>It&#8217;s Not For Everyone<a class="headerlink" href="#it-s-not-for-everyone" title="Permalink to this headline">¶</a></h2>
+<p>If you have existing voice commands whose words you absolutely do not want to
+alter, dragonfluid might not be for you unless you are lucky enough
+that your speech recognition system is either easily trained (something we all
+recognize is not a given), or your command words are natural enough English
+that your system is willing to hear them in the context of a sentence. Strange
+hoots, made up words, and novel syllables are not something easily recognized
+in a dictation, even when as commands they are picked up quite readily.</p>
+<p>In general, commands have a special place in speech recognition systems. The
+system puts extra effort into listening for them, giving them the benefit of
+recognition in many cases. Imagine a phone system that only wants to hear
+numbers from you &#8211; it will try its hardest to map anything you say to one of
+the number words it expects. Meanwhile free dictation has a specific bias to
+hear common phrases and grammatical sentences. If you say &#8220;national wonderment&#8221;,
+the system may still recognize &#8220;national monument&#8221; even if it may have
+considered wonderment a closer fit. And yes, if the fit was strong enough or
+the surround context weak enough to override the &#8220;natural language bias&#8221;, then
+often it will render something less likely, such as &#8220;national wonderment&#8221;.</p>
+<p>When commands are spoken in a row for dragonfluid, only the first part of the
+utterance will get the magical command seeking boost. Everything chained
+afterward is subject to being recognized as free dictation. So it is not
+surprising if you find that commands in the middle of utterances are not
+recognized even if they never failed to be recognized when used by you only as
+commands, especially if they are made up words or novel sounds.</p>
+<p>You can add novel command words to your vocabulary and attempt to train them
+to be heard better, or you can alter your commands to things much more easily
+recognized by your system. In the worst case, a pause between before commands
+stills works, but that&#8217;s not very dragonfluid is it.</p>
+<p>Case-sensitivity can come into the picture as well. A command of &#8220;english&#8221; will
+not be triggered if possible vocabulary values or formatting turns the word into
+&#8220;English&#8221;, but start off a sentence with the word &#8220;English&#8221; and suddenly the
+magical boost of commands will just ignore the capital letter in it&#8217;s attempt to
+match something from the commands it expects.</p>
+<p>In general, if you can dictate your list of commands easily into a plain text
+document, you should be good to go. If you&#8217;re willing to alter your commands
+then nothing should be able to get in your way! And if you&#8217;re really dead set
+on some crazy alien sounding system you devised and loved, then it&#8217;s all up
+to how trainable your speech recognition system is in the context of free
+dictation.</p>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to give it a whirl is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">dragonfluid</span> <span class="kn">import</span> <span class="n">GlobalRegistry</span><span class="p">,</span> <span class="n">FluidRule</span><span class="p">,</span> <span class="n">QuickFluidRules</span>
+</pre></div>
+</div>
+<p>Then,</p>
+<ul class="simple">
+<li>replace any dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a> class with <code class="xref py py-class docutils literal"><span class="pre">GlobalRegistry</span></code>,</li>
+<li>replace any dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#compoundrule-class">CompoundRule</a> with <a class="reference internal" href="Rules.html#_rules.FluidRule" title="_rules.FluidRule"><code class="xref py py-class docutils literal"><span class="pre">FluidRule</span></code></a>,</li>
+<li>replace any dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#mappingrule-class">MappingRule</a> with <code class="xref py py-class docutils literal"><span class="pre">QuickFluidRules</span></code>,</li>
+<li>reload your macros!</li>
+</ul>
+<p>You don&#8217;t have to change all your files at once, but chaining will occur only
+between fluid rule types added to the GlobalRegistry.</p>
+</div>
+<div class="section" id="how-to-speak">
+<h2>How To Speak<a class="headerlink" href="#how-to-speak" title="Permalink to this headline">¶</a></h2>
+<p>Just speak naturally. Don&#8217;t worry if pauses are needed, speak as if you
+trust they&#8217;re not. However, now that you can speak multiple commands in a row,
+there is an additional need to say a &#8220;literal tag&#8221; before anything that looks
+like a command but is not meant to be one. The default literal tag options are
+&#8220;literal&#8221;, &#8220;english&#8221;, and &#8220;English&#8221;.</p>
+<p>You don&#8217;t necessarily need to literalize every word that begins a command. If
+you have a command &#8220;drop previous element &lt;words&gt;&#8221; in your arsenal but no other
+commands begin with the word drop, then you would not need to literalize the
+drop in &#8220;drop me a line&#8221;, or any instance of &#8220;drop&#8221; not following by &#8220;previous
+element&#8221;. &#8220;drop previous element&#8221; is the &#8220;command intro&#8221;, and these intros are
+automatically determined from the spec of commands, consisting of all literal
+words up to the first extra reference in angle brackets. Though in some cases,
+you may have to literalize a couple words in a row.</p>
+<p>You can minimize the need for literal tags by crafting your commands to not
+sound like things you tend to dictate, more like headlines than normal
+sentences, or with words you&#8217;re not likely to use in free dictation.</p>
+<p>If you actually want to use a literal tag in free speech, just saw it twice, as
+in &#8220;English English&#8221;, or precede it with any other literal tag you wish, as in
+&#8220;literal English&#8221;, where &#8220;literal&#8221; would serve the purpose of a literal tag so
+that &#8220;English&#8221; would come across as an intended dictation.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Concepts.html" class="btn btn-neutral float-right" title="Concepts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to dragonfluid’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
