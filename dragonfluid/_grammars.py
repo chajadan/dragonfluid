@@ -211,4 +211,7 @@ class GlobalRegistry(RegistryGrammar):
     
     def __init__(self, name, description=None, context=None, engine=None, **kwargs):
         """kwargs passed to RegistryGrammar"""
+        kwargs["description"] = description
+        kwargs["context"] = context
+        kwargs["engine"] = engine
         RegistryGrammar.__init__(self, name, self._registry, **kwargs)
