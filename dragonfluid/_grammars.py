@@ -200,19 +200,19 @@ class RegistryGrammar(Grammar):
             created.
         :param \*\*kwargs: Passed safely to dragonfly Grammar_
         """
-        self._registry = _first_not_none(registry, Registry())
+        self.registry = _first_not_none(registry, Registry())
         _safe_kwargs(Grammar.__init__, self, name, **kwargs)
 
     # override -- you're not expected to need to know this is in place
     def activate_rule(self, rule):
         if getattr(rule, "_is_registered", False):
-            self._registry.register_rule(rule)
+            self.registry.register_rule(rule)
         Grammar.activate_rule(self, rule)
      
     # override -- you're not expected to need to know this is in place
     def deactivate_rule(self, rule):
         if getattr(rule, "_is_registered", False):
-            self._registry.unregister_rule(rule)
+            self.registry.unregister_rule(rule)
         Grammar.deactivate_rule(self, rule)
      
     # override -- you're not expected to need to know this is in place
@@ -230,7 +230,7 @@ class GlobalRegistry(RegistryGrammar):
     allowing the rules to know about each other for chaining.
     """
     
-    _registry = Registry()
+    registry = Registry()
     
     def __init__(self, name, description=None, context=None, engine=None, **kwargs):
         """
@@ -243,4 +243,4 @@ class GlobalRegistry(RegistryGrammar):
         kwargs["description"] = description
         kwargs["context"] = context
         kwargs["engine"] = engine
-        RegistryGrammar.__init__(self, name, self._registry, **kwargs)
+        RegistryGrammar.__init__(self, name, self.registry, **kwargs)

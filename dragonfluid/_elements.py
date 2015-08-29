@@ -89,6 +89,17 @@ class SplitDictation(_RegistryElement, Dictation):
         self._forced_dictation = forced_dictation
         _safe_kwargs(Dictation.__init__, self, name=name, **kwargs)
     
+    @property
+    def registry(self):
+        if self._registry:
+            return self._registry
+        else:
+            return GlobalRegistry.registry
+    
+    @registry.setter
+    def registry(self, value):
+        self._registry = value
+    
     def value(self, node):
         # The element instance lives on between invocations of the rule in
         # which it lives. This value method is called from each invocation to
