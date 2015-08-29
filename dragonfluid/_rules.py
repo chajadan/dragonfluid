@@ -190,7 +190,7 @@ class QuickFluidRule(FluidRule):
             of a dictionary of extras, and their return value is assigned to
             the extra named by the key. When the ``action`` is executed, it
             will then have these final values available to it.
-        :param \*\*kwargs: Passed to FluidRule, except ``"name"`` and ``"spec"``
+        :param \*\*kwargs: Passed to `FluidRule`, except ``"name"`` and ``"spec"``
             ignored.
         
         
