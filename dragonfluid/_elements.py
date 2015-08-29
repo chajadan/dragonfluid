@@ -69,8 +69,7 @@ class SplitDictation(Dictation):
     def __init__(self, name, registry=GlobalRegistry._registry,
                  forced_dictation=False, **kwargs):
         """
-        Here is a test.
-        
+
         :param string name: The name of this element, used as the keyname in the
             extras dictionary passed back to _process_recognition
         :param _Registry registry: The _Registry instance that determines what
@@ -86,6 +85,11 @@ class SplitDictation(Dictation):
         _safe_kwargs(Dictation.__init__, self, name=name, **kwargs)
     
     def value(self, node):
+        # The element instance lives on between invocations of the rule in
+        # which it lives. This value method is called from each invocation to
+        # obtain the *current* value. Therefore below we reset any state so
+        # that elements retrieved respect the `node` passed in.
+        
         self._node = node # store the context node from which to parse values
         # clear memoize variables of any previous values
         self._words_list_memo = None
@@ -126,6 +130,7 @@ class SplitDictation(Dictation):
     
     @property
     def full(self):
+        """Alias for `full_notrans`."""
         return self.full_notrans
     
     @property
@@ -146,6 +151,7 @@ class SplitDictation(Dictation):
     
     @property
     def full_words(self):
+        """Alias for `full_words_notrans`."""
         return self.full_words_notrans
     
     @property
@@ -166,6 +172,7 @@ class SplitDictation(Dictation):
 
     @property
     def full_container(self):
+        """Alias for `full_container_notrans`.""" 
         return self.full_container_notrans
     
     @property
@@ -191,6 +198,7 @@ class SplitDictation(Dictation):
     
     @property
     def dictation(self):
+        """Alias for `dictation_trans`."""
         return self.dictation_trans
     
     @property
@@ -212,7 +220,8 @@ class SplitDictation(Dictation):
         return " ".join(self.dictation_words_notrans)
     
     @property
-    def dictation_words(self):      
+    def dictation_words(self):
+        """Alias for `dictation_words_trans`."""    
         return self.dictation_words_trans
     
     @property
@@ -235,6 +244,7 @@ class SplitDictation(Dictation):
     
     @property
     def dictation_container(self):
+        """Alias for `dictation_container_trans`."""
         return self.dictation_container_trans
     
     @property
@@ -262,6 +272,7 @@ class SplitDictation(Dictation):
     
     @property
     def command(self):
+        """Alias for `command_notrans`"""
         return self.command_notrans
     
     @property
@@ -284,6 +295,7 @@ class SplitDictation(Dictation):
     
     @property
     def command_words(self):
+        """Alias for `command_words_notrans`"""
         return self.command_words_notrans
 
     @property
@@ -306,6 +318,7 @@ class SplitDictation(Dictation):
     
     @property
     def command_container(self):
+        """Alias for `command_container_notrans`"""
         return self.command_container_notrans
 
     @property
@@ -345,7 +358,16 @@ class SplitForcedDictation(SplitDictation):
     from which to provide it.  
     """
     def __init__(self, name, registry=GlobalRegistry._registry, **kwargs):
-        """kwargs passed to SplitDictation"""
+        """
+
+        :param string name: The name of this element, used as the keyname in the
+            extras dictionary passed back to _process_recognition
+        :param _Registry registry: The _Registry instance that determines what
+            words form a command
+        :param kwargs: Passed safely to `SplitDictation`
+        
+        """
+        
         # ensure only one forced_dictation argument passed
         kwargs["forced_dictation"] = True
         SplitDictation.__init__(self, name=name, registry=registry, **kwargs)
