@@ -104,13 +104,14 @@ class ContinuingRule(_RegistryRule):
         match = re.match(
             r"""
             .*                      # any beginning
-            \[?\s*                  # possibly optional
-            <(?P<extra_tail>.*?)>   # capture extra name as extra_tail
-            \s*\]?\s*
-            $                       # at the very end of spec 
+            \[?\s*                  # possibly optional extra
+            <(?P<final_extra>.*?)>  # capture extra name as final_extra
+            \s*\]?\s*               # with possible end optional indicator
+            $                       # at the very end of spec
             """, _spec, re.VERBOSE)
-        if match:
-            extra_name = match.group("extra_tail")
+
+        if match: # spec ends with an extra
+            extra_name = match.group("final_extra")
             if isinstance(_extras[extra_name], SplitDictation):
                 self._process_recognition = _flowcommand_process_recognition.__get__(self)
             elif isinstance(_extras[extra_name], Dictation):
