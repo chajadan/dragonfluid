@@ -79,7 +79,7 @@ class ContinuingRule(_RegistryRule):
 
         _original_process_recognition = self._process_recognition.im_func
         
-        def _flowall_process_recognition(self, node, extras):
+        def _extraadded_flowfull_process_recognition(self, node, extras):
             _original_process_recognition(self, node, extras)
             if self._flow_element in extras: # optional, so maybe not
                 extras[self._flow_element].mimic_full()
@@ -117,16 +117,21 @@ class ContinuingRule(_RegistryRule):
                 _extras[extra_name] = SplitForcedDictation(extra_name)
                 self._process_recognition = _autoflowcommand_process_recognition.__get__(self)
         else:
-            extra_name = "fluid"
-            while extra_name in _extras:
-                extra_name += "fluid"
-            _spec += " [<" + extra_name + ">]"
-            _extras[extra_name] = SplitDictation(extra_name)
-            self._process_recognition = _flowall_process_recognition.__get__(self)
+            _spec, extra_name = self._add_flow_element(_spec, _extras, _extraadded_flowfull_process_recognition)
+        
         self._flow_element = extra_name
         
         _extras = _extras.values()
         return _spec, _extras
+    
+    def _add_flow_element(self, _spec, _extras, _extraadded_flowfull_process_recognition):
+        extra_name = "fluid"
+        while extra_name in _extras:
+            extra_name += "fluid"
+        _spec += " [<" + extra_name + ">]"
+        _extras[extra_name] = SplitDictation(extra_name)
+        self._process_recognition = _extraadded_flowfull_process_recognition.__get__(self)
+        return _spec, extra_name
 
 
 class FluidRule(RegisteredRule, ContinuingRule):
