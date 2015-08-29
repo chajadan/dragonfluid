@@ -137,9 +137,13 @@ class FluidRule(RegisteredRule, ContinuingRule):
         :param \*\*kwargs: passed to `ContinuingRule` and `RegisteredRule`
         """
 
-        # setup ContinuingRule first as it may alter the spec to be registered
-        ContinuingRule.__init__(self, **kwargs)
+        # setup RegisteredRule first, as it only needs the intros fully
+        # determined and ContinuingRule does not alter the intros, whereas
+        # ContinuingRule alters the extras in necessary ways, so these
+        # changes must not be undone by the original extras value in kwargs,
+        # which would occur RegisteredRule was called after.
         RegisteredRule.__init__(self, **kwargs)
+        ContinuingRule.__init__(self, **kwargs)
 
 
 class _BaseQuickRules(object):
