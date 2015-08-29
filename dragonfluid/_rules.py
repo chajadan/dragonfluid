@@ -81,19 +81,24 @@ class ContinuingRule(_RegistryRule):
         
         def _flowall_process_recognition(self, node, extras):
             _original_process_recognition(self, node, extras)
-            extras[self._flow_element].mimic_full()
+            if self._flow_element in extras: # optional, so maybe not
+                extras[self._flow_element].mimic_full()
             
         def _flowcommand_process_recognition(self, node, extras):
             _original_process_recognition(self, node, extras)
-            extras[self._flow_element].mimic_command()
+            if self._flow_element in extras: # perhaps optional
+                extras[self._flow_element].mimic_command()
             
         def _autoflowcommand_process_recognition(self, node, extras):
-            flow_element = extras[self._flow_element]
-            # replace the extra transparently with exactly what a user expects
-            # from a Dictation element
-            extras[self._flow_element] = flow_element.dictation_container_trans
+            flow_element = extras.get(self._flow_element, None)
+            if flow_element:
+                # replace the extra transparently with exactly what a user
+                # expects from a Dictation element, a normal container rather
+                # than our meta-container
+                extras[self._flow_element] = flow_element.dictation_container_trans
             _original_process_recognition(self, node, extras)
-            flow_element.mimic_command()          
+            if flow_element:
+                flow_element.mimic_command()          
 
         _extras = dict((extra.name, extra) for extra in _extras)
         match = re.match(
