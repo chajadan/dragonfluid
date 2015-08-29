@@ -116,6 +116,8 @@ class ContinuingRule(_RegistryRule):
             elif isinstance(_extras[extra_name], Dictation):
                 _extras[extra_name] = SplitForcedDictation(extra_name)
                 self._process_recognition = _autoflowcommand_process_recognition.__get__(self)
+            else:
+                _spec, extra_name = self._add_flow_element(_spec, _extras, _extraadded_flowfull_process_recognition)
         else:
             _spec, extra_name = self._add_flow_element(_spec, _extras, _extraadded_flowfull_process_recognition)
         
