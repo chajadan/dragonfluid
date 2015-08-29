@@ -71,14 +71,16 @@ class SplitDictation(_RegistryElement, Dictation):
     literal tags stripped, but otherwise be unmodified.
     
     """
-    def __init__(self, name, registry=GlobalRegistry._registry,
+    def __init__(self, name, registry=None,
                  forced_dictation=False, **kwargs):
         """
 
         :param string name: The name of this element, used as the keyname in the
             extras dictionary passed back to _process_recognition
-        :param _Registry registry: The _Registry instance that determines what
-            words form a command
+        :param `Registry` registry: The `Registry` instance that determines what
+            words form a command and what literal tags are in effect. If None,
+            the `ActiveGrammarRule` decorator will set the registry of any
+            `RegistryGrammar` derived instance the containing rule is added to.
         :param Boolean forced_dictation: When True, refuses to recognize
             utterance-initial commands, so as to ensure this element returns
             non-empty free dictation.
@@ -122,10 +124,10 @@ class SplitDictation(_RegistryElement, Dictation):
         is non-empty.
         """
         if self._command_index_memo is None:        
-            command_index = self._registry._determine_command_index(self._formatted_words_list)
+            command_index = self.registry._determine_command_index(self._formatted_words_list)
             if self._forced_dictation and command_index == 0:
                 # do not allow empty dictation bypass utterance-initial command
-                next_command_index = self._registry._determine_command_index(self._formatted_words_list[1:])
+                next_command_index = self.registry._determine_command_index(self._formatted_words_list[1:])
                 if next_command_index is not None:
                     command_index = next_command_index + 1
                 else:
@@ -136,7 +138,7 @@ class SplitDictation(_RegistryElement, Dictation):
     
     def translate(self, words_iterable):
         """Returns a word list, as translated."""
-        return self._registry.translate_literals(words_iterable)    
+        return self.registry.translate_literals(words_iterable)    
     
     def mimic_command(self):
         command = self.command_words_notrans
@@ -211,7 +213,7 @@ class SplitDictation(_RegistryElement, Dictation):
         appropriate type given the speech recognition system in use, with no
         formatting applied yet with literal tags translated to their intended result. 
         """
-        tag_indices = self._registry._get_literal_tag_indices(self.full_words_notrans)
+        tag_indices = self.registry._get_literal_tag_indices(self.full_words_notrans)
         notrans_words = self._node.words()
         translated_words = [notrans_words[i] for i in range(len(notrans_words)) if i not in tag_indices]
         return self._node.engine.DictationContainer(translated_words)
@@ -285,7 +287,7 @@ class SplitDictation(_RegistryElement, Dictation):
         given the speech recognition system in use, with no formatting applied
         yet with literal tags translated to their intended result.   
         """
-        tag_indices = self._registry._get_literal_tag_indices(self.dictation_words_notrans)
+        tag_indices = self.registry._get_literal_tag_indices(self.dictation_words_notrans)
         notrans_words = self._node.words()[:self.command_index]
         translated_words = [notrans_words[i] for i in range(len(notrans_words)) if i not in tag_indices]
         return self._node.engine.DictationContainer(translated_words)
@@ -359,7 +361,7 @@ class SplitDictation(_RegistryElement, Dictation):
         type given the speech recognition system in use, with no formatting
         applied yet with literal tags translated to their intended result.  
         """
-        tag_indices = self._registry._get_literal_tag_indices(self.command_words_notrans)
+        tag_indices = self.registry._get_literal_tag_indices(self.command_words_notrans)
         notrans_words = self._node.words()[self.command_index:]
         translated_words = [notrans_words[i] for i in range(len(notrans_words)) if i not in tag_indices]
         return self._node.engine.DictationContainer(translated_words)    
@@ -377,7 +379,7 @@ class SplitForcedDictation(SplitDictation):
     a value for dictation, even if it must ignore an utterance-initial command
     from which to provide it.  
     """
-    def __init__(self, name, registry=GlobalRegistry._registry, **kwargs):
+    def __init__(self, name, registry=None, **kwargs):
         """
 
         :param string name: The name of this element, used as the keyname in the
