@@ -123,10 +123,14 @@ class SplitDictation(Dictation):
         return self._registry.translate_literals(words_iterable)    
     
     def mimic_command(self):
-        self._node.engine.mimic(self.command_words_notrans)
+        command = self.command_words_notrans
+        if command:
+            self._node.engine.mimic(command)
         
     def mimic_full(self):
-        self._node.engine.mimic(self.full_words_notrans)    
+        full = self.full_words_notrans
+        if full:
+            self._node.engine.mimic(full)    
     
     @property
     def full(self):
