@@ -92,7 +92,7 @@ class SplitDictation(Dictation):
         
         self._node = node # store the context node from which to parse values
         # clear memoize variables of any previous values
-        self._words_list_memo = None
+        self._formatted_words_list_memo = None
         self._command_index_memo = None
         return self
     
