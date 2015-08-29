@@ -204,10 +204,10 @@ class QuickFluidRule(FluidRule):
 
         self.args = args
         kwargs["spec"] = spec
-        kwargs["name"] = self._get_auto_name(spec)
+        kwargs["name"] = self._autogenerate_name(spec)
         FluidRule.__init__(self, **kwargs)
     
-    def _get_auto_name(self, spec):
+    def _autogenerate_name(self, spec):
         id_string = str(QuickFluidRule._next_unique_id)
         QuickFluidRule._next_unique_id += 1
         return "quickFluidRule_" + spec + "_id" + id_string
