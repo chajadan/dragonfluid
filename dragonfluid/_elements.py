@@ -4,7 +4,12 @@ from dragonfluid._grammars import GlobalRegistry
 from dragonfluid._support import _safe_kwargs
 
 
-class SplitDictation(Dictation):
+class _RegistryElement(object):
+    # An internal object used to indicate that the element has a _registry
+    # attribute due to its use of Registry services
+    pass
+
+class SplitDictation(_RegistryElement, Dictation):
     """
     A rule element used to split recognized dictation into an initial free
     dictation part, and a following command part. Either part is optional,
