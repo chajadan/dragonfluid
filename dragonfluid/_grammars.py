@@ -9,11 +9,17 @@ class Registry(object):
     
     literal_tags = ["English", "english", "literal"]
     """
-    Literal tags are used during speech to indicate that what follows is not a
-    command. _Registry object's initialize with these default values.
+    `Literal tags <literalization>` are used during speech to indicate that what
+    follows is not a command. Registry object's initialize with these default values.
     """
     
     def __init__(self, literal_tags=[]):
+        """
+        :param literal_tags: These words will function as `literalization
+            <literalization>` markers to indicate that what
+            follows is not a command, but rather free speech dictation.
+        :type literal_tags: string list
+        """
         self.literal_tags = Registry.literal_tags
         self._registered_commands = Counter()
         self._command_partials = Counter()
@@ -176,11 +182,23 @@ class Registry(object):
 
 
 class RegistryGrammar(Grammar):
+    """
+    A RegistryGrammar is like a normal Grammar_ object, except it registers
+    and unregisters `RegisteredRule`'s as they are activated and deactivated,
+    maintaining a registry of those that are currently active.
+    
+    `ContinuingRule`'s that are added to this grammar will automatically use
+    this object's registry when seeking out commands embedded in utterances.
+    """
     
     def __init__(self, name, registry=None, **kwargs):
         """
-        kwargs safely passed to drafonly Grammar, to allow for future
-        supported parameters.
+        :param name: Passed to dragonfly Grammar_
+        :param Registry registry: The Registry object that serves as the
+            active `registration` list. It may be shared across
+            RegistryGrammar instances. If None, a local Registry object is
+            created.
+        :param \*\*kwargs: Passed safely to dragonfly Grammar_
         """
         self._registry = _first_not_none(registry, Registry())
         _safe_kwargs(Grammar.__init__, self, name, **kwargs)
@@ -206,11 +224,22 @@ class RegistryGrammar(Grammar):
 
 
 class GlobalRegistry(RegistryGrammar):
+    """
+    The GlobalRegistry is a `RegistryGrammar` with a single globally shared
+    `Registry`. It can be used as the Grammar_ object across many files,
+    allowing the rules to know about each other for chaining.
+    """
     
     _registry = Registry()
     
     def __init__(self, name, description=None, context=None, engine=None, **kwargs):
-        """kwargs passed to RegistryGrammar"""
+        """
+        :param name: Passed to dragonfly Grammar_
+        :param description: Passed to dragonfly Grammar_
+        :param context: Passed to dragonfly Grammar_
+        :param engine: Passed to dragonfly Grammar_
+        :param \*\*kwargs: Passed to `RegistryGrammar`
+        """
         kwargs["description"] = description
         kwargs["context"] = context
         kwargs["engine"] = engine
