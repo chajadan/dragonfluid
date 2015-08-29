@@ -1,3 +1,5 @@
+from dragonfluid._grammars import RegistryGrammar
+from dragonfluid._elements import _RegistryElement
 from dragonfluid._rules import _BaseQuickRules
 
 # decorator
@@ -34,6 +36,14 @@ def ActiveGrammarRule(grammar):
     """
     
     def AddToGrammar(rule_class):
+        if isinstance(grammar, RegistryGrammar):
+            if getattr(rule_class, "extras", None):
+                registry_extras = [extra for extra in rule_class.extras 
+                                   if isinstance(extra, _RegistryElement)]
+                for extra in registry_extras:
+                    if extra._registry is None:
+                        extra.registry = grammar.registry
+                
         if issubclass(rule_class, _BaseQuickRules):
             rule_class(grammar)
         else:
