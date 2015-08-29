@@ -5,7 +5,7 @@ from dragonfly import Grammar
 from dragonfluid._specparsers import _XmlSpecParser
 from dragonfluid._support import _first_not_none, _safe_kwargs
 
-class _Registry(object):
+class Registry(object):
     
     literal_tags = ["English", "english", "literal"]
     """
@@ -13,14 +13,12 @@ class _Registry(object):
     command. _Registry object's initialize with these default values.
     """
     
-    def __init__(self):
-        self.literal_tags = _Registry.literal_tags
+    def __init__(self, literal_tags=[]):
+        self.literal_tags = Registry.literal_tags
         self._registered_commands = Counter()
         self._command_partials = Counter()
-
-
-    @staticmethod               
-    def translate_literals(words_iterable):
+            
+    def translate_literals(self, words_iterable):
         """
         Returns a list of words, stripped of literalizer tags in a semantically
         meaningful way. Final isolated literal_tag's are stripped.
@@ -37,14 +35,13 @@ class _Registry(object):
         words_iterator = iter(words_iterable)
 
         for word in words_iterator:
-            if word in _Registry.literal_tags:
+            if word in self.literal_tags:
                 continue
             translation.append(word)
         
         return translation
-    
-    @staticmethod               
-    def _get_literal_tag_indices(words_iterable):
+
+    def _get_literal_tag_indices(self, words_iterable):
         """
         Returns a list of indices where literal tags occur for the purpose of
         being literal tags.
@@ -53,7 +50,7 @@ class _Registry(object):
         words_iterator = enumerate(words_iterable)
 
         for i, word in words_iterator:
-            if word in _Registry.literal_tags:
+            if word in self.literal_tags:
                 indices.append(i)
                 words_iterator.next() # skip the next i, word pair
         
@@ -137,12 +134,12 @@ class _Registry(object):
             intros_spec = _first_not_none(getattr(rule, "_intros_spec", None), getattr(rule, "_spec", None))
             if not intros_spec:
                 return None
-            return _Registry._parse_spec(intros_spec)
+            return Registry._parse_spec(intros_spec)
     
     @staticmethod
     def _determine_partials(rule, intros=None):
         partials = []
-        intros = _first_not_none(intros, _Registry._get_intros(rule))
+        intros = _first_not_none(intros, Registry._get_intros(rule))
         for intro in intros:
             position = intro.rfind(" ")
             while position != -1: # -1 means down to final word, not a partial
@@ -154,7 +151,7 @@ class _Registry(object):
     def _get_intros(rule):
         if getattr(rule, "_is_registered", False):
             if not rule._determined_intros:
-                rule._determined_intros = _Registry._determine_intros(rule)
+                rule._determined_intros = Registry._determine_intros(rule)
             return rule._determined_intros               
         else:
             return []
@@ -163,7 +160,7 @@ class _Registry(object):
     def _get_partials(rule, intros=None):
         if getattr(rule, "_is_registered", False):
             if not rule._determined_partials:
-                rule._determined_partials = _Registry._determine_partials(rule, intros)
+                rule._determined_partials = Registry._determine_partials(rule, intros)
             return rule._determined_partials
         else:
             return []
@@ -174,7 +171,7 @@ class _Registry(object):
             parser = _XmlSpecParser(spec)
             return parser.get_intros()
         except:
-            print "_Registry could not parse this spec for intros:", spec
+            print "Registry could not parse this spec for intros:", spec
             return None
 
 
@@ -185,7 +182,7 @@ class RegistryGrammar(Grammar):
         kwargs safely passed to drafonly Grammar, to allow for future
         supported parameters.
         """
-        self._registry = _first_not_none(registry, _Registry())
+        self._registry = _first_not_none(registry, Registry())
         _safe_kwargs(Grammar.__init__, self, name, **kwargs)
 
     # override -- you're not expected to need to know this is in place
@@ -209,7 +206,8 @@ class RegistryGrammar(Grammar):
 
 
 class GlobalRegistry(RegistryGrammar):
-    _registry = _Registry()
+    
+    _registry = Registry()
     
     def __init__(self, name, description=None, context=None, engine=None, **kwargs):
         """kwargs passed to RegistryGrammar"""
