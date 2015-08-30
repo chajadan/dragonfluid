@@ -19,7 +19,7 @@ import shlex
 # here = os.path.abspath(os.path.dirname(__file__))
 # source_location = os.path.join(here, '..', '..')
 # sys.path.insert(0, source_location)
-sys.path.insert(0, os.path.abspath("..\..\dragonfluid"))
+sys.path.insert(0, os.path.abspath("..\.."))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

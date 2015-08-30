@@ -133,15 +133,15 @@
   <div class="section" id="grammars">
 <h1>Grammars<a class="headerlink" href="#grammars" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="_grammars.GlobalRegistry">
-<em class="property">class </em><code class="descname">GlobalRegistry</code><span class="sig-paren">(</span><em>name</em>, <em>description=None</em>, <em>context=None</em>, <em>engine=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#GlobalRegistry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.GlobalRegistry" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref py py-class docutils literal"><span class="pre">_grammars.RegistryGrammar</span></code></a></p>
-<p>The GlobalRegistry is a <a class="reference internal" href="#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> with a single globally shared
-<a class="reference internal" href="#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>. It can be used as the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a> object across many files,
+<dt id="dragonfluid._grammars.GlobalRegistry">
+<em class="property">class </em><code class="descname">GlobalRegistry</code><span class="sig-paren">(</span><em>name</em>, <em>description=None</em>, <em>context=None</em>, <em>engine=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#GlobalRegistry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.GlobalRegistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dragonfluid._grammars.RegistryGrammar" title="dragonfluid._grammars.RegistryGrammar"><code class="xref py py-class docutils literal"><span class="pre">dragonfluid._grammars.RegistryGrammar</span></code></a></p>
+<p>The GlobalRegistry is a <a class="reference internal" href="#dragonfluid._grammars.RegistryGrammar" title="dragonfluid._grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> with a single globally shared
+<a class="reference internal" href="#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>. It can be used as the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a> object across many files,
 allowing the rules to know about each other for chaining.</p>
 <dl class="method">
-<dt id="_grammars.GlobalRegistry.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>description=None</em>, <em>context=None</em>, <em>engine=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#GlobalRegistry.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.GlobalRegistry.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.GlobalRegistry.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>description=None</em>, <em>context=None</em>, <em>engine=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#GlobalRegistry.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.GlobalRegistry.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -151,7 +151,7 @@ allowing the rules to know about each other for chaining.</p>
 <li><strong>description</strong> &#8211; Passed to dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a></li>
 <li><strong>context</strong> &#8211; Passed to dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a></li>
 <li><strong>engine</strong> &#8211; Passed to dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a></li>
-<li><strong>**kwargs</strong> &#8211; Passed to <a class="reference internal" href="#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a></li>
+<li><strong>**kwargs</strong> &#8211; Passed to <a class="reference internal" href="#dragonfluid._grammars.RegistryGrammar" title="dragonfluid._grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a></li>
 </ul>
 </td>
 </tr>
@@ -162,24 +162,24 @@ allowing the rules to know about each other for chaining.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="_grammars.RegistryGrammar">
-<em class="property">class </em><code class="descname">RegistryGrammar</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#RegistryGrammar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.RegistryGrammar" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.RegistryGrammar">
+<em class="property">class </em><code class="descname">RegistryGrammar</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#RegistryGrammar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.RegistryGrammar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar" title="(in Dragonfly v0.6)"><code class="xref py py-class docutils literal"><span class="pre">dragonfly.grammar.grammar_base.Grammar</span></code></a></p>
 <p>A RegistryGrammar is like a normal <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a> object, except it registers
-and unregisters <a class="reference internal" href="Rules.html#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a>&#8216;s as they are activated and deactivated,
+and unregisters <a class="reference internal" href="Rules.html#dragonfluid._rules.RegisteredRule" title="dragonfluid._rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a>&#8216;s as they are activated and deactivated,
 maintaining a registry of those that are currently active.</p>
-<p><a class="reference internal" href="Rules.html#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a>&#8216;s that are added to this grammar will automatically use
+<p><a class="reference internal" href="Rules.html#dragonfluid._rules.ContinuingRule" title="dragonfluid._rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a>&#8216;s that are added to this grammar will automatically use
 this object&#8217;s registry when seeking out commands embedded in utterances.</p>
 <dl class="method">
-<dt id="_grammars.RegistryGrammar.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#RegistryGrammar.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.RegistryGrammar.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.RegistryGrammar.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#RegistryGrammar.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.RegistryGrammar.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>name</strong> &#8211; Passed to dragonfly <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a></li>
-<li><strong>registry</strong> (<a class="reference internal" href="#_grammars.Registry" title="_grammars.Registry"><em>Registry</em></a>) &#8211; The Registry object that serves as the
+<li><strong>registry</strong> (<a class="reference internal" href="#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><em>Registry</em></a>) &#8211; The Registry object that serves as the
 active <a class="reference internal" href="Concepts.html#registration"><span>Registration</span></a> list. It may be shared across
 RegistryGrammar instances. If None, a local Registry object is
 created.</li>
@@ -194,8 +194,8 @@ created.</li>
 </dd></dl>
 
 <dl class="class">
-<dt id="_grammars.Registry">
-<em class="property">class </em><code class="descname">Registry</code><span class="sig-paren">(</span><em>literal_tags=['English', 'english', 'literal'], override_tags=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry">
+<em class="property">class </em><code class="descname">Registry</code><span class="sig-paren">(</span><em>literal_tags=['English', 'english', 'literal'], override_tags=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry" title="Permalink to this definition">¶</a></dt>
 <dd><p>A registry maintains information about a set of known active rules and the
 <a class="reference internal" href="Concepts.html#literalization"><span>literal tags</span></a> that must precede their <a class="reference internal" href="Concepts.html#intros"><span>intros</span></a>
 when their commands are meant as free speech dictation.</p>
@@ -204,8 +204,8 @@ when their commands are meant as free speech dictation.</p>
 as it relates to its literal tags and currently actively registered
 commands.</p>
 <dl class="method">
-<dt id="_grammars.Registry.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>literal_tags=['English', 'english', 'literal'], override_tags=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>literal_tags=['English', 'english', 'literal'], override_tags=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -224,15 +224,15 @@ replace them.</li>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="_grammars.Registry.literal_tags">
-<code class="descname">literal_tags</code><em class="property"> = ['English', 'english', 'literal']</em><a class="headerlink" href="#_grammars.Registry.literal_tags" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.literal_tags">
+<code class="descname">literal_tags</code><em class="property"> = ['English', 'english', 'literal']</em><a class="headerlink" href="#dragonfluid._grammars.Registry.literal_tags" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="Concepts.html#literalization"><span>Literal tags</span></a> are used during speech to indicate that what
 follows is not a command. Registry object&#8217;s initialize with these default values.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.translate_literals">
-<code class="descname">translate_literals</code><span class="sig-paren">(</span><em>words_iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.translate_literals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.translate_literals" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.translate_literals">
+<code class="descname">translate_literals</code><span class="sig-paren">(</span><em>words_iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.translate_literals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.translate_literals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of words, stripped of <a class="reference internal" href="Glossary.html#term-literal-tag"><span class="xref std std-term">literal tags</span></a>
 in a semantically meaningful way. Final isolated literal_tag&#8217;s are
 stripped.</p>
@@ -243,23 +243,23 @@ is retained.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.register_rule">
-<code class="descname">register_rule</code><span class="sig-paren">(</span><em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.register_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.register_rule" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.register_rule">
+<code class="descname">register_rule</code><span class="sig-paren">(</span><em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.register_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.register_rule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the rule to a list of known active rules. Not generally called
 directly by users. For more information see
 the <a class="reference internal" href="Concepts.html#registration"><span>registration</span></a> concept section.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.unregister_rule">
-<code class="descname">unregister_rule</code><span class="sig-paren">(</span><em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.unregister_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.unregister_rule" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.unregister_rule">
+<code class="descname">unregister_rule</code><span class="sig-paren">(</span><em>rule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.unregister_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.unregister_rule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the rule from the list of known active rules. Not generally
 called directly by users.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.is_registered">
-<code class="descname">is_registered</code><span class="sig-paren">(</span><em>intro</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.is_registered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.is_registered" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.is_registered">
+<code class="descname">is_registered</code><span class="sig-paren">(</span><em>intro</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.is_registered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.is_registered" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -276,15 +276,15 @@ called directly by users.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.has_partial">
-<code class="descname">has_partial</code><span class="sig-paren">(</span><em>partial_command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.has_partial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.has_partial" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.has_partial">
+<code class="descname">has_partial</code><span class="sig-paren">(</span><em>partial_command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.has_partial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.has_partial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the string supplied is an initial substring of a
 registered intro, assuming only full words are supplied.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="_grammars.Registry.starts_with_registered">
-<code class="descname">starts_with_registered</code><span class="sig-paren">(</span><em>words_iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_grammars.html#Registry.starts_with_registered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_grammars.Registry.starts_with_registered" title="Permalink to this definition">¶</a></dt>
+<dt id="dragonfluid._grammars.Registry.starts_with_registered">
+<code class="descname">starts_with_registered</code><span class="sig-paren">(</span><em>words_iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dragonfluid/_grammars.html#Registry.starts_with_registered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dragonfluid._grammars.Registry.starts_with_registered" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the iterable of strings begins with the words of a
 registered command.</p>
 </dd></dl>

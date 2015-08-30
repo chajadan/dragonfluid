@@ -1,6 +1,6 @@
 Elements
 ========
 
-.. automodule:: _elements
+.. automodule:: dragonfluid._elements
    :special-members: __init__
    :members:

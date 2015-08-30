@@ -151,17 +151,17 @@ the part meant for it, and forwards the rest.</p>
 <div class="section" id="registration">
 <span id="id1"></span><h2>Registration<a class="headerlink" href="#registration" title="Permalink to this headline">¶</a></h2>
 <p>Registration is the recording of <a class="reference internal" href="Glossary.html#term-command"><span class="xref std std-term">commands</span></a> that are to be
-noticed from within the middle of an <a class="reference internal" href="Glossary.html#term-utterance"><span class="xref std std-term">utterance</span></a>. A <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> holds this
+noticed from within the middle of an <a class="reference internal" href="Glossary.html#term-utterance"><span class="xref std std-term">utterance</span></a>. A <a class="reference internal" href="Grammars.html#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> holds this
 information and is consulted by rules that perform <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chaining</span></a> when
 checking to see if an utterance has <span class="xref std std-term">embedded commands</span>.</p>
-<p>The most common use of a <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> is through the <a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>, which is a
+<p>The most common use of a <a class="reference internal" href="Grammars.html#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> is through the <a class="reference internal" href="Grammars.html#dragonfluid._grammars.GlobalRegistry" title="dragonfluid._grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>, which is a
 type of <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a> <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar" title="(in Dragonfly v0.6)"><code class="xref any docutils literal"><span class="pre">Grammar</span></code></a>. It can be
 used across files and the rules will all see each other.
 It&#8217;s a good default choice. If you have a need to isolate some rules, you can
-use a <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> to hold those rules. A <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> or the <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>
+use a <a class="reference internal" href="Grammars.html#dragonfluid._grammars.RegistryGrammar" title="dragonfluid._grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> to hold those rules. A <a class="reference internal" href="Grammars.html#dragonfluid._grammars.RegistryGrammar" title="dragonfluid._grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> or the <a class="reference internal" href="Grammars.html#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>
 it holds can be used locally within a single file, or potentially used across a
 subset of files, but it has no awareness of what is registered in the
-<a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>.</p>
+<a class="reference internal" href="Grammars.html#dragonfluid._grammars.GlobalRegistry" title="dragonfluid._grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>.</p>
 </div>
 <div class="section" id="intros">
 <span id="id2"></span><h2>Intros<a class="headerlink" href="#intros" title="Permalink to this headline">¶</a></h2>
@@ -239,7 +239,7 @@ said, even though it may look like a <a class="reference internal" href="#regist
 actually intended as <a class="reference internal" href="Glossary.html#term-free-speech-dictation"><span class="xref std std-term">free speech dictation</span></a>. This is accomplished by
 preceded these command impostors with a spoken
 <em class="dfn">literal tag</em>. The default options are &#8220;literal&#8221;, &#8220;english&#8221;, and &#8220;English&#8221;,
-and they are configurable. It is <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>&#8216;s that maintain and work with
+and they are configurable. It is <a class="reference internal" href="Grammars.html#dragonfluid._grammars.Registry" title="dragonfluid._grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>&#8216;s that maintain and work with
 literal tags.</p>
 <p>You don&#8217;t necessarily need to literalize every word that begins a command. If
 you have a command &#8220;drop previous element &lt;words&gt;&#8221; in your arsenal but no other
@@ -266,8 +266,8 @@ whenever they are serving the role of literal tags. This is the most common
 desired form when grabbing free speech dictation for use in the processing of
 your rules, such as when outputting text to an entry field or document.</p>
 <p>Translation happens behind the scenes in the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/elements.html?highlight=dictation#dictation-class">Dictation</a> elements of
-<a class="reference internal" href="Rules.html#_rules.FluidRule" title="_rules.FluidRule"><code class="xref any py py-class docutils literal"><span class="pre">FluidRule</span></code></a>&#8216;s. More advanced usage requires a choice of translated versus
-non-traslated results, and <a class="reference internal" href="Elements.html#_elements.SplitDictation" title="_elements.SplitDictation"><code class="xref any py py-class docutils literal"><span class="pre">SplitDictation</span></code></a> objects can return either.</p>
+<a class="reference internal" href="Rules.html#dragonfluid._rules.FluidRule" title="dragonfluid._rules.FluidRule"><code class="xref any py py-class docutils literal"><span class="pre">FluidRule</span></code></a>&#8216;s. More advanced usage requires a choice of translated versus
+non-traslated results, and <a class="reference internal" href="Elements.html#dragonfluid._elements.SplitDictation" title="dragonfluid._elements.SplitDictation"><code class="xref any py py-class docutils literal"><span class="pre">SplitDictation</span></code></a> objects can return either.</p>
 </div>
 </div>
 

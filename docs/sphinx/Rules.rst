@@ -3,24 +3,24 @@
 Rules
 ========
 
-.. :module:: _rules
+.. :module:: dragonfluid._rules
 
 .. Order rules by most common use
 
-.. autoclass:: _rules.FluidRule
+.. autoclass:: dragonfluid._rules.FluidRule
    :members:
    :special-members: __init__
    :show-inheritance:
-.. autoclass:: _rules.QuickFluidRules
+.. autoclass:: dragonfluid._rules.QuickFluidRules
    :members:
    :special-members: __init__
-.. autoclass:: _rules.RegisteredRule
+.. autoclass:: dragonfluid._rules.RegisteredRule
    :members:
    :special-members: __init__
-.. autoclass:: _rules.ContinuingRule
+.. autoclass:: dragonfluid._rules.ContinuingRule
    :members:
    :special-members: __init__
-.. autoclass:: _rules.QuickFluidRule
+.. autoclass:: dragonfluid._rules.QuickFluidRule
    :members:
    :special-members: __init__
    :show-inheritance:   

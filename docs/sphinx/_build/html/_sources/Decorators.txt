@@ -3,5 +3,5 @@
 Decorators
 ========
 
-.. automodule:: _decorators
+.. automodule:: dragonfluid._decorators
    :members:

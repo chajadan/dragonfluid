@@ -3,18 +3,18 @@
 Grammars
 ========
 
-.. :module:: _grammars
+.. :module:: dragonfluid._grammars
 
 .. Order classes by most common use
 
-.. autoclass:: _grammars.GlobalRegistry
+.. autoclass:: dragonfluid._grammars.GlobalRegistry
    :members:
    :special-members: __init__
    :show-inheritance:
-.. autoclass:: _grammars.RegistryGrammar
+.. autoclass:: dragonfluid._grammars.RegistryGrammar
    :members:
    :special-members: __init__
    :show-inheritance:
-.. autoclass:: _grammars.Registry
+.. autoclass:: dragonfluid._grammars.Registry
    :members:
    :special-members: __init__
