@@ -6,6 +6,17 @@ from dragonfluid._specparsers import _XmlSpecParser
 from dragonfluid._support import _first_not_none, _safe_kwargs
 
 class Registry(object):
+    """
+    A registry maintains information about a set of known active rules and the
+    `literal tags <literalization>` that must precede their `intros <intros>`
+    when their commands are meant as free speech dictation.
+    
+    Working directly with a Registry object is an advanced use case.
+    
+    A registry exposes services regarding inspection and parsing of utterances
+    as it relates to its literal tags and currently actively registered
+    commands.
+    """
     
     literal_tags = ["English", "english", "literal"]
     """
@@ -73,12 +84,21 @@ class Registry(object):
         return indices
     
     def register_rule(self, rule):
+        """
+        Adds the rule to a list of known active rules. Not generally called
+        directly by users. For more information see
+        the `registration <registration>` concept section.
+        """
         intros = self._get_intros(rule)
         partials = self._get_partials(rule, intros)
         self._registered_commands.update(intros)
         self._command_partials.update(partials) 
  
     def unregister_rule(self, rule):
+        """
+        Removes the rule from the list of known active rules. Not generally
+        called directly by users.
+        """
         intros = self._get_intros(rule)
         partials = self._get_partials(rule, intros)
         self._registered_commands.subtract(intros)
@@ -88,9 +108,17 @@ class Registry(object):
         return self._registered_commands[command] > 0
     
     def has_partial(self, partial_command):
+        """
+        Returns True if the string supplied is an initial substring of a
+        registered intro, assuming only full words are supplied.
+        """
         return self._command_partials[partial_command] > 0
 
     def starts_with_registered(self, words_iterable):
+        """
+        Returns True if the iterable of strings begins with the words of a
+        registered command.
+        """
         running_match = ""
         words_iterator = iter(words_iterable)
         for word in words_iterator:
