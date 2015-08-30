@@ -1,2 +1,2 @@
 mock
--e git+http://github.com/chajadan/dragonfly/tree/docs_enabler#egg=dragonfly
+-e git+http://github.com/chajadan/dragonfly/@docs_enabler#egg=dragonfly
