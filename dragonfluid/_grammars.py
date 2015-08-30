@@ -42,11 +42,10 @@ class Registry(object):
             
     def translate_literals(self, words_iterable):
         """
-        Returns a list of words, stripped of literalizer tags in a semantically
-        meaningful way. Final isolated literal_tag's are stripped.
-        """
-        
-        """
+        Returns a list of words, stripped of :term:`literal tags <literal tag>`
+        in a semantically meaningful way. Final isolated literal_tag's are
+        stripped.
+
         When a literal_tag precedes a literal_tag, the second occurrence only
         is retained.
         
