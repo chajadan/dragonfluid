@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name="dragonfluid",
-    version="0.9.0.a1",
+    version="0.9.0.a5",
     description=("A dragonfly extension to allow voice commands to be spoken "
                  "together without pausing. Supports Dragon NaturallySpeaking "
                  "and Windows Speech Recognition."),
