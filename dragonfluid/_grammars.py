@@ -13,14 +13,19 @@ class Registry(object):
     follows is not a command. Registry object's initialize with these default values.
     """
     
-    def __init__(self, literal_tags=[]):
+    def __init__(self, literal_tags=[], override_tags=False):
         """
         :param literal_tags: These words will function as `literalization
             <literalization>` markers to indicate that what
             follows is not a command, but rather free speech dictation.
         :type literal_tags: string list
+        :param bool override_tags: If False, the literal_tags supplied to
+            __init__ will be added to the defaults, otherwise they will
+            replace them.
         """
-        self.literal_tags = Registry.literal_tags
+        self.literal_tags = literal_tags
+        if not override_tags:
+            self.literal_tags += Registry.literal_tags
         self._registered_commands = Counter()
         self._command_partials = Counter()
             
