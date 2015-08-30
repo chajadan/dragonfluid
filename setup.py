@@ -17,7 +17,7 @@ setup(
     url="https://github.com/chajadan/dragonfluid",
     author="Charles J. Daniels",
     author_email="dragonfluid@chajadan.net",
-    license="LICENSE.txt",
+    license="http://www.chajadan.net/licenses/NFFFLicenseV1.txt",
     keywords="speech recognition, voice coding, dragonfly, Dragon, Dragon NaturallySpeaking, Windows Speech Recognition, WSR",
     packages=["dragonfluid"],
     install_requires=[
