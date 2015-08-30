@@ -81,7 +81,7 @@ class SplitDictation(_RegistryElement, Dictation):
             words form a command and what literal tags are in effect. If None,
             the `ActiveGrammarRule` decorator will set the registry of any
             `RegistryGrammar` derived instance the containing rule is added to.
-        :param Boolean forced_dictation: When True, refuses to recognize
+        :param bool forced_dictation: When True, refuses to recognize
             utterance-initial commands, so as to ensure this element returns
             non-empty free dictation.
         :param kwargs: Passed safely to Dictation.__init__
