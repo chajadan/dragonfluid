@@ -3,7 +3,17 @@ import re
 import six
 
 from dragonfly import CompoundRule, Dictation, Function, ActionBase
-from dragonfly.engines.base.dictation import DictationContainerBase
+# locate DictationContainerBase
+import dragonfly.engines
+base_dictation = getattr(dragonfly.engines, "dictation_base", None)
+if base_dictation:
+    from dragonfly.engines.dictation_base import DictationContainerBase
+elif getattr(dragonfly.engines, "base", None):
+    from dragonfly.engines.base import DictationContainerBase
+else:
+    print ("Cannot locate DictationContainerBase in either"
+           "dragonfly.engines.dictation_base or dragonfly.engines.base")
+    raise ImportError
 
 from dragonfluid._elements import SplitDictation, SplitForcedDictation
 from dragonfluid._support import _first_not_none, _safe_kwargs
