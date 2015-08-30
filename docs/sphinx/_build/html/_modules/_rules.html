@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>_rules &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  <title>_rules &mdash; dragonfluid 0.9.0.a5 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="../index.html"/>
+    <link rel="top" title="dragonfluid 0.9.0.a5 documentation" href="../index.html"/>
         <link rel="up" title="Module code" href="index.html"/> 
 
   
@@ -135,7 +135,17 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="kn">from</span> <span class="nn">dragonfly</span> <span class="kn">import</span> <span class="n">CompoundRule</span><span class="p">,</span> <span class="n">Dictation</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">ActionBase</span>
-<span class="kn">from</span> <span class="nn">dragonfly.engines.base.dictation</span> <span class="kn">import</span> <span class="n">DictationContainerBase</span>
+<span class="c"># locate DictationContainerBase</span>
+<span class="kn">import</span> <span class="nn">dragonfly.engines</span>
+<span class="n">base_dictation</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dragonfly</span><span class="o">.</span><span class="n">engines</span><span class="p">,</span> <span class="s">&quot;dictation_base&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">base_dictation</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">dragonfly.engines.dictation_base</span> <span class="kn">import</span> <span class="n">DictationContainerBase</span>
+<span class="k">elif</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dragonfly</span><span class="o">.</span><span class="n">engines</span><span class="p">,</span> <span class="s">&quot;base&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">dragonfly.engines.base</span> <span class="kn">import</span> <span class="n">DictationContainerBase</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">&quot;Cannot locate DictationContainerBase in either&quot;</span>
+           <span class="s">&quot;dragonfly.engines.dictation_base or dragonfly.engines.base&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span>
 
 <span class="kn">from</span> <span class="nn">dragonfluid._elements</span> <span class="kn">import</span> <span class="n">SplitDictation</span><span class="p">,</span> <span class="n">SplitForcedDictation</span>
 <span class="kn">from</span> <span class="nn">dragonfluid._support</span> <span class="kn">import</span> <span class="n">_first_not_none</span><span class="p">,</span> <span class="n">_safe_kwargs</span>
@@ -418,7 +428,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.9.0.a1',
+            VERSION:'0.9.0.a5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
