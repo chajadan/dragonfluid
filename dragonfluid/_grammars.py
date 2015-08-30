@@ -47,8 +47,13 @@ class Registry(object):
 
         for word in words_iterator:
             if word in self.literal_tags:
-                continue
-            translation.append(word)
+                try:
+                    word = words_iterator.next()
+                    translation.append(word)
+                except StopIteration:
+                    break
+            else:
+                translation.append(word)
         
         return translation
 
