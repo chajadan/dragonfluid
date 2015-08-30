@@ -103,8 +103,8 @@ class Registry(object):
         self._registered_commands.subtract(intros)
         self._command_partials.subtract(partials)
     
-    def is_registered(self, command):
-        return self._registered_commands[command] > 0
+    def is_registered(self, intro):
+        return self._registered_commands[intro] > 0
     
     def has_partial(self, partial_command):
         """
