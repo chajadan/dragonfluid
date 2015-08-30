@@ -16,15 +16,31 @@ import sys
 import os
 import shlex
 
-# here = os.path.abspath(os.path.dirname(__file__))
-# source_location = os.path.join(here, '..', '..')
-# sys.path.insert(0, source_location)
 sys.path.insert(0, os.path.abspath("..\.."))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
+
+#---------------------------------------------------------------------------
+# Mock libraries that are not available on Read the Docs
+
+on_read_the_docs = (os.environ.get("READTHEDOCS", None) == "True")
+if on_read_the_docs:
+    from mock import MagicMock
+    class Mock(MagicMock):
+        @classmethod
+        def __getattr__(cls, name):
+            return Mock()
+    mock_modules = ["ctypes", "ctypes.wintypes", "pythoncom",
+                    "pywintypes", "win32api", "win32clipboard",
+                    "win32com", "win32com.client",
+                    "win32com.client.gencache", "win32com.gen_py", 
+                    "win32com.shell", "win32con", "win32event",
+                    "win32file", "win32gui", "winsound", "winxpgui"]
+    for module_name in mock_modules:
+        sys.modules[module_name] = Mock()
 
 # -- General configuration ------------------------------------------------
 
