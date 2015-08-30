@@ -225,7 +225,21 @@ class QuickFluidRule(FluidRule):
 
 
 class QuickFluidRules(_BaseQuickRules):
+    """
+    Used like a MappingRule_ but results in `FluidRule`'s rather than simple
+    CompoundRule_\ 's.
+    
+    The ``mapping`` attribute is extended. In addition to the normal key/value
+    pairs of spec/action, a value may also be a list or tuple whose first
+    element is the usual action, and whose second element is a dict of
+    parameters to be passed as \*\*kwargs to `QuickFluidRule`.
+    """
     def __init__(self, grammar):
+        """
+        Not usually called directly, but rather via `ActiveGrammarRule`.
+        :param grammar: The Grammar to add rules to, generally a
+            `RegistryGrammar` such as the `GlobalRegistry`.
+        """
         _BaseQuickRules.__init__(self, grammar)
         for spec, entry in self.mapping.items():
             kwargs = {}
