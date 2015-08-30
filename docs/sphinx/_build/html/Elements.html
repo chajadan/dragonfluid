@@ -77,16 +77,14 @@
 <li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#additional-features">Additional Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#learn-more">Learn More</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -94,6 +92,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -135,7 +134,7 @@
 <span id="elements"></span><h1>Elements<a class="headerlink" href="#module-_elements" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="_elements.SplitDictation">
-<em class="property">class </em><code class="descname">SplitDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SplitDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A rule element used to split recognized dictation into an initial free
 dictation part, and a following command part. Either part is optional,
 unless the element is initialized with the forced_dictation element to True.</p>
@@ -193,18 +192,19 @@ formatting or not. If you choose a <strong>_trans</strong> container, it will ha
 literal tags stripped, but otherwise be unmodified.</p>
 <dl class="method">
 <dt id="_elements.SplitDictation.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Here is a test.</p>
-<table class="docutils field-list" frame="void" rules="none">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>forced_dictation=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitDictation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>name</strong> (<em>string</em>) &#8211; The name of this element, used as the keyname in the
 extras dictionary passed back to _process_recognition</li>
-<li><strong>registry</strong> (<em>_Registry</em>) &#8211; The _Registry instance that determines what
-words form a command</li>
-<li><strong>forced_dictation</strong> (<em>Boolean</em>) &#8211; When True, refuses to recognize
+<li><strong>registry</strong> (<a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><em>Registry</em></a>) &#8211; The <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> instance that determines what
+words form a command and what literal tags are in effect. If None,
+the <a class="reference internal" href="Decorators.html#_decorators.ActiveGrammarRule" title="_decorators.ActiveGrammarRule"><code class="xref any py py-func docutils literal"><span class="pre">ActiveGrammarRule</span></code></a> decorator will set the registry of any
+<a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> derived instance the containing rule is added to.</li>
+<li><strong>forced_dictation</strong> (<em>bool</em>) &#8211; When True, refuses to recognize
 utterance-initial commands, so as to ensure this element returns
 non-empty free dictation.</li>
 <li><strong>kwargs</strong> &#8211; Passed safely to Dictation.__init__</li>
@@ -232,6 +232,12 @@ is non-empty.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.full">
+<code class="descname">full</code><a class="headerlink" href="#_elements.SplitDictation.full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.full_notrans" title="_elements.SplitDictation.full_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">full_notrans</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.full_notrans">
 <code class="descname">full_notrans</code><a class="headerlink" href="#_elements.SplitDictation.full_notrans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the full content, as a string, with formatting applied and with
@@ -246,6 +252,12 @@ literal tags translated to their intended result.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.full_words">
+<code class="descname">full_words</code><a class="headerlink" href="#_elements.SplitDictation.full_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.full_words_notrans" title="_elements.SplitDictation.full_words_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">full_words_notrans</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.full_words_notrans">
 <code class="descname">full_words_notrans</code><a class="headerlink" href="#_elements.SplitDictation.full_words_notrans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the full content, as a word list, with formatting applied and
@@ -257,6 +269,12 @@ with literal tags retained.</p>
 <code class="descname">full_words_trans</code><a class="headerlink" href="#_elements.SplitDictation.full_words_trans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the full content, as a word list, with formatting applied and
 with literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.full_container">
+<code class="descname">full_container</code><a class="headerlink" href="#_elements.SplitDictation.full_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.full_container_notrans" title="_elements.SplitDictation.full_container_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">full_container_notrans</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -276,6 +294,12 @@ formatting applied yet with literal tags translated to their intended result.</p
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.dictation">
+<code class="descname">dictation</code><a class="headerlink" href="#_elements.SplitDictation.dictation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.dictation_trans" title="_elements.SplitDictation.dictation_trans"><code class="xref any py py-attr docutils literal"><span class="pre">dictation_trans</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.dictation_trans">
 <code class="descname">dictation_trans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_trans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns any and all content up to the first full command intro, if any.
@@ -292,6 +316,12 @@ retained.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_words">
+<code class="descname">dictation_words</code><a class="headerlink" href="#_elements.SplitDictation.dictation_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.dictation_words_trans" title="_elements.SplitDictation.dictation_words_trans"><code class="xref any py py-attr docutils literal"><span class="pre">dictation_words_trans</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.dictation_words_trans">
 <code class="descname">dictation_words_trans</code><a class="headerlink" href="#_elements.SplitDictation.dictation_words_trans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns any and all content up to the first full command intro, if any.
@@ -305,6 +335,12 @@ tags translated to their intended result.</p>
 <dd><p>Returns any and all content up to the first full command intro, if any.
 Content is returned as a word list with formatting and with literal
 tags retained.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.dictation_container">
+<code class="descname">dictation_container</code><a class="headerlink" href="#_elements.SplitDictation.dictation_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.dictation_container_trans" title="_elements.SplitDictation.dictation_container_trans"><code class="xref any py py-attr docutils literal"><span class="pre">dictation_container_trans</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -326,6 +362,12 @@ yet with literal tags translated to their intended result.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.command">
+<code class="descname">command</code><a class="headerlink" href="#_elements.SplitDictation.command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.command_notrans" title="_elements.SplitDictation.command_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">command_notrans</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.command_notrans">
 <code class="descname">command_notrans</code><a class="headerlink" href="#_elements.SplitDictation.command_notrans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns any and all content starting from first full command intro, if
@@ -342,6 +384,12 @@ tags retained.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="_elements.SplitDictation.command_words">
+<code class="descname">command_words</code><a class="headerlink" href="#_elements.SplitDictation.command_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.command_words_notrans" title="_elements.SplitDictation.command_words_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">command_words_notrans</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="_elements.SplitDictation.command_words_notrans">
 <code class="descname">command_words_notrans</code><a class="headerlink" href="#_elements.SplitDictation.command_words_notrans" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns any and all content starting from first full command intro, if
@@ -355,6 +403,12 @@ literal tags retained.</p>
 <dd><p>Returns any and all content starting from first full command intro, if
 any. Content is returned as a word list with formatting and with
 literal tags translated to their intended result.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="_elements.SplitDictation.command_container">
+<code class="descname">command_container</code><a class="headerlink" href="#_elements.SplitDictation.command_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#_elements.SplitDictation.command_container_notrans" title="_elements.SplitDictation.command_container_notrans"><code class="xref any py py-attr docutils literal"><span class="pre">command_container_notrans</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -379,14 +433,28 @@ applied yet with literal tags translated to their intended result.</p>
 
 <dl class="class">
 <dt id="_elements.SplitForcedDictation">
-<em class="property">class </em><code class="descname">SplitForcedDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SplitForcedDictation</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SplitDictation with forced_dictation set to True, guaranteed to return
 a value for dictation, even if it must ignore an utterance-initial command
 from which to provide it.</p>
 <dl class="method">
 <dt id="_elements.SplitForcedDictation.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=&lt;dragonfluid._grammars._Registry object at 0x0358BD70&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>kwargs passed to SplitDictation</p>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>registry=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_elements.html#SplitForcedDictation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_elements.SplitForcedDictation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The name of this element, used as the keyname in the
+extras dictionary passed back to _process_recognition</li>
+<li><strong>registry</strong> (<em>_Registry</em>) &#8211; The _Registry instance that determines what
+words form a command</li>
+<li><strong>kwargs</strong> &#8211; Passed safely to <a class="reference internal" href="#_elements.SplitDictation" title="_elements.SplitDictation"><code class="xref any py py-class docutils literal"><span class="pre">SplitDictation</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

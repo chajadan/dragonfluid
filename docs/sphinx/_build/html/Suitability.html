@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  <title>The Impact Of Fluidity &mdash; dragonfluid 0.9.0.a1 documentation</title>
   
 
   
@@ -115,11 +115,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>&lt;no title&gt;</li>
+    <li>The Impact Of Fluidity</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/global.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Suitability.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -128,7 +128,44 @@
 </div>
           <div role="main" class="document">
             
-  
+  <div class="section" id="the-impact-of-fluidity">
+<span id="suitability"></span><h1>The Impact Of Fluidity<a class="headerlink" href="#the-impact-of-fluidity" title="Permalink to this headline">¶</a></h1>
+<p>In general, commands have a special place in speech recognition systems. The
+system puts extra effort into listening for them, giving them the benefit of
+recognition in many cases. Imagine a phone system that only wants to hear
+numbers from you &#8211; it will try its hardest to map anything you say to one of
+the number words it expects. &#8220;Sticks hate fun&#8221; could easily be accepted as 681.
+Meanwhile free dictation has a specific bias to
+hear common phrases and grammatical sentences. If you say &#8220;national wonderment&#8221;,
+the system may still recognize &#8220;national monument&#8221; even if it may have
+considered wonderment a closer fit. And yes, if the fit was strong enough or
+the surrounding context weak enough to override the &#8220;natural language bias&#8221;,
+then often it will render something less likely, such as &#8220;national wonderment&#8221;.</p>
+<p>When commands are spoken in a row for dragonfluid, only the first part of the
+utterance will get the magical command seeking boost. Everything chained
+afterward is subject to being recognized as free dictation. So it is not
+surprising if you find that commands in the middle of utterances are not
+recognized even if they never fail to be recognized when at the beginning of
+utterances, especially if the commands consist of made up words or novel sounds.
+This means that commands that up to now have always worked for you might present
+challenges.</p>
+<p>You can add novel command words to your vocabulary and attempt to train them
+to be heard better, or you can alter your commands to things much more easily
+recognized by your system. In the worst case, a pause between commands
+stills works, but that&#8217;s not very dragonfluid is it.</p>
+<p>Case-sensitivity can come into the picture as well. A command of &#8220;english&#8221; will
+not be triggered if possible vocabulary values or formatting turns the word into
+&#8220;English&#8221;, but start off a sentence with the word &#8220;English&#8221; and suddenly the
+magical boost of commands will just ignore the capital letter in it&#8217;s attempt to
+match something from the commands it expects.</p>
+<p>In general, if you can dictate your list of commands easily into a plain text
+document, you should be good to go. If you&#8217;re willing to alter your commands
+then nothing should be able to get in your way! And if you&#8217;re really dead set
+on some crazy alien sounding system you devised and loved, then it&#8217;s all up
+to how trainable your speech recognition system is in the context of free
+dictation.</p>
+</div>
+
 
           </div>
           <footer>

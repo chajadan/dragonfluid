@@ -32,7 +32,7 @@
   
     <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="index.html"/>
         <link rel="next" title="Publicly Supported Objects" href="PubliclySupported.html"/>
-        <link rel="prev" title="dragonfluid" href="README.html"/> 
+        <link rel="prev" title="Welcome to dragonfluid!" href="README.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -77,16 +77,14 @@
 <li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#additional-features">Additional Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#learn-more">Learn More</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -94,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -135,54 +134,63 @@
 <h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Dragonfluid is focused on one task &#8211; recognizing the occurrence of commands
-in the middle of a dictation to allow multiple commands to be spoken in a row
-without pauses.</p>
-<p>When a rule is meant to allow passing off to other rules, it looks for
-registered commands embedded in the dictation, and when it encounters one, the
+<p>dragonfluid is primarily focused on one task &#8211; recognizing the occurrence of
+commands in the middle an <a class="reference internal" href="Glossary.html#term-utterance"><span class="xref std std-term">utterance</span></a> to allow multiple commands to be
+spoken in a row without pauses.</p>
+<p>When a <a class="reference internal" href="Glossary.html#term-rule"><span class="xref std std-term">rule</span></a> is meant to allow <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chaining</span></a> to other rules, it looks
+for
+<a class="reference internal" href="Glossary.html#term-registered-command"><span class="xref std std-term">registered commands</span></a> embedded in the utterance that
+triggered it, and when it encounters one, the
 whole utterance from that first command on is put aside. Once the rule finishes
-processing, usually having put the dictation part of the utterance to use, the
+processing, the
 put aside command portion is then <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed. To the speech recognition system,
 the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a> seems like you just spoke the command right then. And since what was
-<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed might contain several embedded commands, each rule simply cuts off
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed might contain several chained commands, each rule simply cuts off
 the part meant for it, and forwards the rest.</p>
 </div>
 <div class="section" id="registration">
 <span id="id1"></span><h2>Registration<a class="headerlink" href="#registration" title="Permalink to this headline">¶</a></h2>
-<p>Registration is the recording of rules that are to be noticed when occurring in
-the middle of an utterance. A registry holds this information and is consulted
-when checking to see if an utterance has embedded commands.</p>
-<p>One such registry is the <code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>, which is a type of <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a>
-<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar">Grammar</a>. It can be used across files and the rules will all see each other.
+<p>Registration is the recording of <a class="reference internal" href="Glossary.html#term-command"><span class="xref std std-term">commands</span></a> that are to be
+noticed from within the middle of an <a class="reference internal" href="Glossary.html#term-utterance"><span class="xref std std-term">utterance</span></a>. A <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> holds this
+information and is consulted by rules that perform <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chaining</span></a> when
+checking to see if an utterance has <span class="xref std std-term">embedded commands</span>.</p>
+<p>The most common use of a <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a> is through the <a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>, which is a
+type of <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a> <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/grammar.html#dragonfly.grammar.grammar_base.Grammar" title="(in Dragonfly v0.6)"><code class="xref any docutils literal"><span class="pre">Grammar</span></code></a>. It can be
+used across files and the rules will all see each other.
 It&#8217;s a good default choice. If you have a need to isolate some rules, you can
-use a <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code> to hold those rules. A <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code> can be local
-to a single file, or potentially used across a subset of files, but it has no
-awareness of the <code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>.</p>
+use a <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> to hold those rules. A <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> or the <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>
+it holds can be used locally within a single file, or potentially used across a
+subset of files, but it has no awareness of what is registered in the
+<a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>.</p>
+</div>
 <div class="section" id="intros">
-<span id="id2"></span><h3>Intros<a class="headerlink" href="#intros" title="Permalink to this headline">¶</a></h3>
-<p>When a rule is registered, what is actually registered is the initial fixed
-literal text of the command spec, referred to as the <strong>intros</strong>. This process
-is generally automatic, but can be guided. If a spec has only words and no
-special elements, such as:</p>
+<span id="id2"></span><h2>Intros<a class="headerlink" href="#intros" title="Permalink to this headline">¶</a></h2>
+<p>When a rule is <a class="reference internal" href="#registration"><span>registered</span></a>, the initial fixed
+literal text of the command spec is determined and remembered to act as a
+trigger that the command occurred. These triggers are referred to as the
+<em class="dfn">intros</em>. This process is largely automatic, but can be guided.</p>
+<p>If a <a class="reference internal" href="Glossary.html#term-spec"><span class="xref std std-term">spec</span></a> has only words and no <span class="xref std std-term">extras</span> elements, such
+as:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;next page&quot;</span>
 <span class="c"># intros = [&quot;next page&quot;]</span>
 </pre></div>
 </div>
-<p>then the entire command counts as the intro. If a command has any extra
-elements in its spec, the intros stop at the first extra they encounter. For
+<p>then the entire spec counts as the intro. If a spec has any extra
+elements in it, the intros stop at the first extra they encounter. For
 instance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;go to page &lt;page_number&gt;&quot;</span>
 <span class="c"># intros = [&quot;go to page&quot;]</span>
 </pre></div>
 </div>
-<p>This means that any commands that begin with an extra will have an empty string
-as their intro, and therefore will not be chained to from other commands.</p>
-<p>If you noticed, intros is plural, because there can be many:</p>
+<p>This means that any commands whose spec begins with an extra will have an empty
+string as its intro, and therefore will not be <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chained</span></a> to
+from other commands.</p>
+<p>Intros is plural, because there can be many:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;(close|quit)&quot;</span>
 <span class="c"># intros = [&quot;close&quot;, &quot;quit&quot;]</span>
 </pre></div>
 </div>
-<p>And it can get more complex:</p>
+<p>And it can get arbitrarily complex:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;(go [to]|at) next line&quot;</span>
 <span class="c"># intros = [&quot;go next line&quot;, &quot;go to next line&quot;, &quot;at next line&quot;]</span>
 </pre></div>
@@ -200,14 +208,15 @@ as their intro, and therefore will not be chained to from other commands.</p>
 </div>
 <p>The automatic generation of intros stops at the <code class="docutils literal"><span class="pre">direction</span></code> extra, but we can
 tell that all cases can be determined in advance. The following intros would
-result in less need for literal tags:</p>
+result in less need for <a class="reference internal" href="Glossary.html#term-literal-tag"><span class="xref std std-term">literal tags</span></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">intros</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;copy left word&quot;</span><span class="p">,</span> <span class="s">&quot;copy right word&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Rules that undergo registration allow you to supply the intros directly to
-override the automatically generated ones, either to the __init__ or as a class
-attribute, similar to the spec.</p>
-<p>There is a short cut option called <strong>intro_spec</strong> that, instead of supplying
+override the automatically generated ones, supplied either to the __init__ or as
+a class attribute, similar to the spec. So we could supply these improved upon
+intros.
+There is a short cut option called <strong>intro_spec</strong> that, instead of supplying
 individual intros, lets you give a new spec from which to derive them. Our
 original scenario would then look like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">spec</span> <span class="o">=</span> <span class="s">&quot;copy &lt;direction&gt; word&quot;</span>
@@ -219,9 +228,46 @@ original scenario would then look like:</p>
 <p>When supplying intros, directly or through intros_spec, you must supply
 appropriate values, for if you have no &#8220;zixo&#8221; command but you place that in a
 list of intros, if &#8220;zixo&#8221; occurs in the middle of an utterance, it will get
-<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed, match nothing, and depending on your setup, lose the whole rest of
-the utterance which must then be repeated.</p>
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html?highlight=mimic#dragonfly.engines.base.EngineBase.mimic">mimic</a>&#8216;ed along with all that follows, the mimic will match no commands, and
+depending on your setup, that whole rest of the <a class="reference internal" href="Glossary.html#term-utterance"><span class="xref std std-term">utterance</span></a> will be lost
+and must then be repeated.</p>
 </div>
+<div class="section" id="literalization">
+<span id="id3"></span><h2>Literalization<a class="headerlink" href="#literalization" title="Permalink to this headline">¶</a></h2>
+<p>Literalization in the context of dragonfluid is an indication that something
+said, even though it may look like a <a class="reference internal" href="#registration"><span>registered</span></a> command, is
+actually intended as <a class="reference internal" href="Glossary.html#term-free-speech-dictation"><span class="xref std std-term">free speech dictation</span></a>. This is accomplished by
+preceded these command impostors with a spoken
+<em class="dfn">literal tag</em>. The default options are &#8220;literal&#8221;, &#8220;english&#8221;, and &#8220;English&#8221;,
+and they are configurable. It is <a class="reference internal" href="Grammars.html#_grammars.Registry" title="_grammars.Registry"><code class="xref any py py-class docutils literal"><span class="pre">Registry</span></code></a>&#8216;s that maintain and work with
+literal tags.</p>
+<p>You don&#8217;t necessarily need to literalize every word that begins a command. If
+you have a command &#8220;drop previous element &lt;words&gt;&#8221; in your arsenal but no other
+commands begin with the word drop, then you would not need to literalize the
+word drop unless it was followed by the words &#8220;previous element&#8221;. So &#8220;drop me a
+line&#8221; could be said plainly. Commands are recognized only by any one of their
+<a class="reference internal" href="#registration"><span>registered</span></a> <a class="reference internal" href="Glossary.html#term-intro"><span class="xref std std-term">intros</span></a>, avoiding any need for
+literalization when possible.</p>
+<p>You can further minimize the need for literal tags by crafting your commands to
+not sound like things you tend to dictate. Simple strategies include using rarer
+words or making commands sound more like headlines or Tarzan speak.</p>
+<p>If you actually want to use a literal tag in free speech, just precede it by any
+literal tag, including itself. &#8220;English English&#8221; and &#8220;literal English&#8221; both just
+<a class="reference internal" href="#translation"><span>translate</span></a> to &#8220;English&#8221;.</p>
+<p>When a literal tag has been literalized to serve as <a class="reference internal" href="Glossary.html#term-free-speech-dictation"><span class="xref std std-term">free speech
+dictation</span></a>, it does not serve as a literal tag for what follows.</p>
+</div>
+<div class="section" id="translation">
+<span id="id4"></span><h2>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h2>
+<p>Translation in the context of dragonfluid is taking exact words spoken by
+the user that may or may not contain <a class="reference internal" href="Glossary.html#term-literal-tag"><span class="xref std std-term">literal tags</span></a>, and
+producing the intended free speech that results from removing any literal tags
+whenever they are serving the role of literal tags. This is the most common
+desired form when grabbing free speech dictation for use in the processing of
+your rules, such as when outputting text to an entry field or document.</p>
+<p>Translation happens behind the scenes in the <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/elements.html?highlight=dictation#dictation-class">Dictation</a> elements of
+<a class="reference internal" href="Rules.html#_rules.FluidRule" title="_rules.FluidRule"><code class="xref any py py-class docutils literal"><span class="pre">FluidRule</span></code></a>&#8216;s. More advanced usage requires a choice of translated versus
+non-traslated results, and <a class="reference internal" href="Elements.html#_elements.SplitDictation" title="_elements.SplitDictation"><code class="xref any py py-class docutils literal"><span class="pre">SplitDictation</span></code></a> objects can return either.</p>
 </div>
 </div>
 
@@ -234,7 +280,7 @@ the utterance which must then be repeated.</p>
         <a href="PubliclySupported.html" class="btn btn-neutral float-right" title="Publicly Supported Objects" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="README.html" class="btn btn-neutral" title="dragonfluid" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="README.html" class="btn btn-neutral" title="Welcome to dragonfluid!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

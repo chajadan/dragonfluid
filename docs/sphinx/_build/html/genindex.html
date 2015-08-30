@@ -80,10 +80,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -134,11 +135,18 @@
  | <a href="#A"><strong>A</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -154,11 +162,27 @@
   </dt>
 
         
+  <dt><a href="Grammars.html#_grammars.GlobalRegistry.__init__">(GlobalRegistry method)</a>
+  </dt>
+
+        
   <dt><a href="Rules.html#_rules.QuickFluidRule.__init__">(QuickFluidRule method)</a>
   </dt>
 
         
+  <dt><a href="Rules.html#_rules.QuickFluidRules.__init__">(QuickFluidRules method)</a>
+  </dt>
+
+        
   <dt><a href="Rules.html#_rules.RegisteredRule.__init__">(RegisteredRule method)</a>
+  </dt>
+
+        
+  <dt><a href="Grammars.html#_grammars.Registry.__init__">(Registry method)</a>
+  </dt>
+
+        
+  <dt><a href="Grammars.html#_grammars.RegistryGrammar.__init__">(RegistryGrammar method)</a>
   </dt>
 
         
@@ -174,18 +198,10 @@
   <dt><a href="Decorators.html#module-_decorators">_decorators (module)</a>
   </dt>
 
-      
-  <dt><a href="Elements.html#module-_elements">_elements (module)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="Grammars.html#module-_grammars">_grammars (module)</a>
-  </dt>
-
-      
-  <dt><a href="Rules.html#module-_rules">_rules (module)</a>
+  <dt><a href="Elements.html#module-_elements">_elements (module)</a>
   </dt>
 
   </dl></td>
@@ -205,6 +221,32 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="Glossary.html#term-chaining"><strong>chaining</strong></a>
+  </dt>
+
+      
+  <dt><a href="Glossary.html#term-command"><strong>command</strong></a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="Elements.html#_elements.SplitDictation.command">(SplitDictation attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="Glossary.html#term-command-action"><strong>command action</strong></a>
+  </dt>
+
+      
+  <dt><a href="Glossary.html#term-command-intro"><strong>command intro</strong></a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.command_container">command_container (SplitDictation attribute)</a>
+  </dt>
+
+      
   <dt><a href="Elements.html#_elements.SplitDictation.command_container_notrans">command_container_notrans (SplitDictation attribute)</a>
   </dt>
 
@@ -212,6 +254,8 @@
   <dt><a href="Elements.html#_elements.SplitDictation.command_container_trans">command_container_trans (SplitDictation attribute)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.command_index">command_index (SplitDictation attribute)</a>
   </dt>
@@ -220,10 +264,12 @@
   <dt><a href="Elements.html#_elements.SplitDictation.command_notrans">command_notrans (SplitDictation attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.command_trans">command_trans (SplitDictation attribute)</a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.command_words">command_words (SplitDictation attribute)</a>
   </dt>
 
       
@@ -245,6 +291,24 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="Glossary.html#term-dictation"><strong>dictation</strong></a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="Elements.html#_elements.SplitDictation.dictation">(SplitDictation attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="Glossary.html#term-dictation-container"><strong>dictation container</strong></a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.dictation_container">dictation_container (SplitDictation attribute)</a>
+  </dt>
+
+      
   <dt><a href="Elements.html#_elements.SplitDictation.dictation_container_notrans">dictation_container_notrans (SplitDictation attribute)</a>
   </dt>
 
@@ -256,12 +320,16 @@
   <dt><a href="Elements.html#_elements.SplitDictation.dictation_notrans">dictation_notrans (SplitDictation attribute)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.dictation_trans">dictation_trans (SplitDictation attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.dictation_words">dictation_words (SplitDictation attribute)</a>
+  </dt>
+
       
   <dt><a href="Elements.html#_elements.SplitDictation.dictation_words_notrans">dictation_words_notrans (SplitDictation attribute)</a>
   </dt>
@@ -277,11 +345,39 @@
   </dl></td>
 </tr></table>
 
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-embedded-command"><strong>embedded command</strong></a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-extras"><strong>extras</strong></a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Rules.html#_rules.FluidRule">FluidRule (class in _rules)</a>
+  </dt>
+
+      
+  <dt><a href="Glossary.html#term-free-speech-dictation"><strong>free speech dictation</strong></a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.full">full (SplitDictation attribute)</a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.full_container">full_container (SplitDictation attribute)</a>
   </dt>
 
       
@@ -292,14 +388,18 @@
   <dt><a href="Elements.html#_elements.SplitDictation.full_container_trans">full_container_trans (SplitDictation attribute)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.full_notrans">full_notrans (SplitDictation attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.full_trans">full_trans (SplitDictation attribute)</a>
+  </dt>
+
+      
+  <dt><a href="Elements.html#_elements.SplitDictation.full_words">full_words (SplitDictation attribute)</a>
   </dt>
 
       
@@ -313,11 +413,79 @@
   </dl></td>
 </tr></table>
 
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.GlobalRegistry">GlobalRegistry (class in _grammars)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry.has_partial">has_partial() (Registry method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-intro"><strong>intro</strong></a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry.is_registered">is_registered() (Registry method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-literal-tag"><strong>literal tag</strong></a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry.literal_tags">literal_tags (Registry attribute)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-macro"><strong>macro</strong></a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Rules.html#_rules.QuickFluidRule">QuickFluidRule (class in _rules)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Rules.html#_rules.QuickFluidRules">QuickFluidRules (class in _rules)</a>
   </dt>
 
   </dl></td>
@@ -327,7 +495,29 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="Grammars.html#_grammars.Registry.register_rule">register_rule() (Registry method)</a>
+  </dt>
+
+      
+  <dt><a href="Glossary.html#term-registered-command"><strong>registered command</strong></a>
+  </dt>
+
+      
   <dt><a href="Rules.html#_rules.RegisteredRule">RegisteredRule (class in _rules)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry">Registry (class in _grammars)</a>
+  </dt>
+
+      
+  <dt><a href="Grammars.html#_grammars.RegistryGrammar">RegistryGrammar (class in _grammars)</a>
+  </dt>
+
+      
+  <dt><a href="Glossary.html#term-rule"><strong>rule</strong></a>
   </dt>
 
   </dl></td>
@@ -336,6 +526,10 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-spec"><strong>spec</strong></a>
+  </dt>
+
       
   <dt><a href="Elements.html#_elements.SplitDictation">SplitDictation (class in _elements)</a>
   </dt>
@@ -346,6 +540,10 @@
   <dt><a href="Elements.html#_elements.SplitForcedDictation">SplitForcedDictation (class in _elements)</a>
   </dt>
 
+      
+  <dt><a href="Grammars.html#_grammars.Registry.starts_with_registered">starts_with_registered() (Registry method)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -354,6 +552,28 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Elements.html#_elements.SplitDictation.translate">translate() (SplitDictation method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry.translate_literals">translate_literals() (Registry method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Grammars.html#_grammars.Registry.unregister_rule">unregister_rule() (Registry method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Glossary.html#term-utterance"><strong>utterance</strong></a>
   </dt>
 
   </dl></td>

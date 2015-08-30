@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>_grammars &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#how-to-speak">How To Speak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#translation">Translation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>_grammars</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for _grammars</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="kn">from</span> <span class="nn">dragonfly</span> <span class="kn">import</span> <span class="n">Grammar</span>
+
+<span class="kn">from</span> <span class="nn">dragonfluid._specparsers</span> <span class="kn">import</span> <span class="n">_XmlSpecParser</span>
+<span class="kn">from</span> <span class="nn">dragonfluid._support</span> <span class="kn">import</span> <span class="n">_first_not_none</span><span class="p">,</span> <span class="n">_safe_kwargs</span>
+
+<div class="viewcode-block" id="Registry"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry">[docs]</a><span class="k">class</span> <span class="nc">Registry</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A registry maintains information about a set of known active rules and the</span>
+<span class="sd">    `literal tags &lt;literalization&gt;` that must precede their `intros &lt;intros&gt;`</span>
+<span class="sd">    when their commands are meant as free speech dictation.</span>
+<span class="sd">    </span>
+<span class="sd">    Working directly with a Registry object is an advanced use case.</span>
+<span class="sd">    </span>
+<span class="sd">    A registry exposes services regarding inspection and parsing of utterances</span>
+<span class="sd">    as it relates to its literal tags and currently actively registered</span>
+<span class="sd">    commands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">literal_tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;English&quot;</span><span class="p">,</span> <span class="s">&quot;english&quot;</span><span class="p">,</span> <span class="s">&quot;literal&quot;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `Literal tags &lt;literalization&gt;` are used during speech to indicate that what</span>
+<span class="sd">    follows is not a command. Registry object&#39;s initialize with these default values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="Registry.__init__"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">literal_tags</span><span class="o">=</span><span class="p">[],</span> <span class="n">override_tags</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param literal_tags: These words will function as `literalization</span>
+<span class="sd">            &lt;literalization&gt;` markers to indicate that what</span>
+<span class="sd">            follows is not a command, but rather free speech dictation.</span>
+<span class="sd">        :type literal_tags: string list</span>
+<span class="sd">        :param bool override_tags: If False, the literal_tags supplied to</span>
+<span class="sd">            __init__ will be added to the defaults, otherwise they will</span>
+<span class="sd">            replace them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span> <span class="o">=</span> <span class="n">literal_tags</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">override_tags</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span> <span class="o">+=</span> <span class="n">Registry</span><span class="o">.</span><span class="n">literal_tags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registered_commands</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_command_partials</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+            </div>
+<div class="viewcode-block" id="Registry.translate_literals"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.translate_literals">[docs]</a>    <span class="k">def</span> <span class="nf">translate_literals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words_iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of words, stripped of :term:`literal tags &lt;literal tag&gt;`</span>
+<span class="sd">        in a semantically meaningful way. Final isolated literal_tag&#39;s are</span>
+<span class="sd">        stripped.</span>
+
+<span class="sd">        When a literal_tag precedes a literal_tag, the second occurrence only</span>
+<span class="sd">        is retained.</span>
+<span class="sd">        </span>
+<span class="sd">        In a string of all literal_tag&#39;s, exactly the odd indexed ones</span>
+<span class="sd">        (in a 0-indexed sense) would be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">translation</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">words_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_iterator</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">word</span> <span class="o">=</span> <span class="n">words_iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                    <span class="n">translation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">translation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">translation</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words_iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of indices where literal tags occur for the purpose of</span>
+<span class="sd">        being literal tags.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">words_iterator</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_iterator</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span><span class="p">:</span>
+                <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">words_iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span> <span class="c"># skip the next i, word pair</span>
+        
+        <span class="k">return</span> <span class="n">indices</span>
+    
+<div class="viewcode-block" id="Registry.register_rule"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.register_rule">[docs]</a>    <span class="k">def</span> <span class="nf">register_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the rule to a list of known active rules. Not generally called</span>
+<span class="sd">        directly by users. For more information see</span>
+<span class="sd">        the `registration &lt;registration&gt;` concept section.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">intros</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+        <span class="n">partials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_partials</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">intros</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registered_commands</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">intros</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_command_partials</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">partials</span><span class="p">)</span> 
+ </div>
+<div class="viewcode-block" id="Registry.unregister_rule"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.unregister_rule">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes the rule from the list of known active rules. Not generally</span>
+<span class="sd">        called directly by users.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">intros</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+        <span class="n">partials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_partials</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">intros</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registered_commands</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">intros</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_command_partials</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">partials</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="Registry.is_registered"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.is_registered">[docs]</a>    <span class="k">def</span> <span class="nf">is_registered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param string command_intro: A command :term:`intro` to test for</span>
+<span class="sd">            `registration &lt;registration&gt;`.</span>
+<span class="sd">        :returns: True if registered, False otherwise</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registered_commands</span><span class="p">[</span><span class="n">intro</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    </div>
+<div class="viewcode-block" id="Registry.has_partial"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.has_partial">[docs]</a>    <span class="k">def</span> <span class="nf">has_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partial_command</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if the string supplied is an initial substring of a</span>
+<span class="sd">        registered intro, assuming only full words are supplied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_partials</span><span class="p">[</span><span class="n">partial_command</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="Registry.starts_with_registered"><a class="viewcode-back" href="../Grammars.html#_grammars.Registry.starts_with_registered">[docs]</a>    <span class="k">def</span> <span class="nf">starts_with_registered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words_iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if the iterable of strings begins with the words of a</span>
+<span class="sd">        registered command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">running_match</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">words_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_iterator</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span><span class="p">:</span>
+                <span class="n">words_iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                <span class="k">continue</span>
+            
+            <span class="n">running_match</span> <span class="o">+=</span> <span class="n">word</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_registered</span><span class="p">(</span><span class="n">running_match</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_partial</span><span class="p">(</span><span class="n">running_match</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+    </div>
+    <span class="k">def</span> <span class="nf">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictation_words</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dictation_words</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        
+        <span class="n">word_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictation_words</span><span class="p">)</span>
+        <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">start_index</span> <span class="o">&lt;</span> <span class="n">word_count</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dictation_words</span><span class="p">[</span><span class="n">start_index</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">literal_tags</span><span class="p">:</span>
+                <span class="n">start_index</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="k">continue</span>
+            <span class="n">words_iterable</span> <span class="o">=</span> <span class="p">(</span><span class="n">dictation_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="n">word_count</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">starts_with_registered</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">start_index</span>
+            <span class="n">start_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">word_count</span>
+    
+    <span class="k">def</span> <span class="nf">_split_dictation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictation</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_dictation_words_list</span><span class="p">(</span><span class="n">dictation</span><span class="o">.</span><span class="n">words</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_split_dictation_words_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictation_words_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dictation_words_list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
+        <span class="n">command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="n">dictation_words_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">command_index</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># indicates an error</span>
+            <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">dictation_words_list</span><span class="p">[:</span><span class="n">command_index</span><span class="p">],</span> <span class="n">dictation_words_list</span><span class="p">[</span><span class="n">command_index</span><span class="p">:]</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_determine_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expected to be able to accept any spec as long as it is well-formed:</span>
+<span class="sd">        - balanced parentheses and brackets</span>
+<span class="sd">        - contains no { or } characters</span>
+<span class="sd">        - outside of &lt;extra&gt; references, contains no &lt; or &gt; characters</span>
+<span class="sd">        </span>
+<span class="sd">        This could be further enhanced to extract string parts from Option elements</span>
+<span class="sd">        e.g.    spec = &quot;select &lt;direction&gt; word&quot;</span>
+<span class="sd">                extras = (Choice(&quot;direction&quot;, {&quot;left&quot;:&quot;left&quot;, &quot;right&quot;:&quot;right&quot;}), )</span>
+<span class="sd">                ### intros --&gt; [&quot;select right word&quot;, &quot;select left word&quot;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">_intros</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rule</span><span class="o">.</span><span class="n">_intros</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">intros_spec</span> <span class="o">=</span> <span class="n">_first_not_none</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_intros_spec&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_spec&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">intros_spec</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="n">Registry</span><span class="o">.</span><span class="n">_parse_spec</span><span class="p">(</span><span class="n">intros_spec</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_determine_partials</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">intros</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">partials</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">intros</span> <span class="o">=</span> <span class="n">_first_not_none</span><span class="p">(</span><span class="n">intros</span><span class="p">,</span> <span class="n">Registry</span><span class="o">.</span><span class="n">_get_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">intro</span> <span class="ow">in</span> <span class="n">intros</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">intro</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">position</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c"># -1 means down to final word, not a partial</span>
+                <span class="n">partials</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intro</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">position</span><span class="p">])</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="n">intro</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">partials</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_is_registered&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">rule</span><span class="o">.</span><span class="n">_determined_intros</span><span class="p">:</span>
+                <span class="n">rule</span><span class="o">.</span><span class="n">_determined_intros</span> <span class="o">=</span> <span class="n">Registry</span><span class="o">.</span><span class="n">_determine_intros</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">rule</span><span class="o">.</span><span class="n">_determined_intros</span>               
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_partials</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">intros</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_is_registered&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">rule</span><span class="o">.</span><span class="n">_determined_partials</span><span class="p">:</span>
+                <span class="n">rule</span><span class="o">.</span><span class="n">_determined_partials</span> <span class="o">=</span> <span class="n">Registry</span><span class="o">.</span><span class="n">_determine_partials</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">intros</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">rule</span><span class="o">.</span><span class="n">_determined_partials</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">_XmlSpecParser</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_intros</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Registry could not parse this spec for intros:&quot;</span><span class="p">,</span> <span class="n">spec</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="RegistryGrammar"><a class="viewcode-back" href="../Grammars.html#_grammars.RegistryGrammar">[docs]</a><span class="k">class</span> <span class="nc">RegistryGrammar</span><span class="p">(</span><span class="n">Grammar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A RegistryGrammar is like a normal Grammar_ object, except it registers</span>
+<span class="sd">    and unregisters `RegisteredRule`&#39;s as they are activated and deactivated,</span>
+<span class="sd">    maintaining a registry of those that are currently active.</span>
+<span class="sd">    </span>
+<span class="sd">    `ContinuingRule`&#39;s that are added to this grammar will automatically use</span>
+<span class="sd">    this object&#39;s registry when seeking out commands embedded in utterances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="RegistryGrammar.__init__"><a class="viewcode-back" href="../Grammars.html#_grammars.RegistryGrammar.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param name: Passed to dragonfly Grammar_</span>
+<span class="sd">        :param Registry registry: The Registry object that serves as the</span>
+<span class="sd">            active `registration` list. It may be shared across</span>
+<span class="sd">            RegistryGrammar instances. If None, a local Registry object is</span>
+<span class="sd">            created.</span>
+<span class="sd">        :param \*\*kwargs: Passed safely to dragonfly Grammar_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registry</span> <span class="o">=</span> <span class="n">_first_not_none</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">Registry</span><span class="p">())</span>
+        <span class="n">_safe_kwargs</span><span class="p">(</span><span class="n">Grammar</span><span class="o">.</span><span class="n">__init__</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c"># override -- you&#39;re not expected to need to know this is in place</span></div>
+    <span class="k">def</span> <span class="nf">activate_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_is_registered&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">register_rule</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+        <span class="n">Grammar</span><span class="o">.</span><span class="n">activate_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">)</span>
+     
+    <span class="c"># override -- you&#39;re not expected to need to know this is in place</span>
+    <span class="k">def</span> <span class="nf">deactivate_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="s">&quot;_is_registered&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">unregister_rule</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+        <span class="n">Grammar</span><span class="o">.</span><span class="n">deactivate_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">)</span>
+     
+    <span class="c"># override -- you&#39;re not expected to need to know this is in place</span>
+    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">:</span>
+            <span class="c"># unregister to prevent multiply registered rules during restart</span>
+            <span class="n">rule</span><span class="o">.</span><span class="n">deactivate</span><span class="p">()</span>
+        <span class="n">Grammar</span><span class="o">.</span><span class="n">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="GlobalRegistry"><a class="viewcode-back" href="../Grammars.html#_grammars.GlobalRegistry">[docs]</a><span class="k">class</span> <span class="nc">GlobalRegistry</span><span class="p">(</span><span class="n">RegistryGrammar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GlobalRegistry is a `RegistryGrammar` with a single globally shared</span>
+<span class="sd">    `Registry`. It can be used as the Grammar_ object across many files,</span>
+<span class="sd">    allowing the rules to know about each other for chaining.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">Registry</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="GlobalRegistry.__init__"><a class="viewcode-back" href="../Grammars.html#_grammars.GlobalRegistry.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param name: Passed to dragonfly Grammar_</span>
+<span class="sd">        :param description: Passed to dragonfly Grammar_</span>
+<span class="sd">        :param context: Passed to dragonfly Grammar_</span>
+<span class="sd">        :param engine: Passed to dragonfly Grammar_</span>
+<span class="sd">        :param \*\*kwargs: Passed to `RegistryGrammar`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;context&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;engine&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">engine</span>
+        <span class="n">RegistryGrammar</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -18,6 +18,7 @@ Contents:
    Elements
    Rules
    Decorators
+   Glossary
 
 
 Indices and tables

@@ -77,16 +77,14 @@
 <li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#additional-features">Additional Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#learn-more">Learn More</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -94,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -131,15 +130,66 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="module-_rules">
-<span id="rules"></span><h1>Rules<a class="headerlink" href="#module-_rules" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="rules">
+<h1>Rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_rules.FluidRule">
+<em class="property">class </em><code class="descname">FluidRule</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#FluidRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.FluidRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref py py-class docutils literal"><span class="pre">_rules.RegisteredRule</span></code></a>, <a class="reference internal" href="#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref py py-class docutils literal"><span class="pre">_rules.ContinuingRule</span></code></a></p>
+<p>A FluidRule is both a <a class="reference internal" href="#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a> and a <a class="reference internal" href="#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a>, meaning it
+can be <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chained</span></a> to from other commands, and then chain off
+to further commands. This is the most common case, for general use unless
+you have specific needs. These always attempt to chain automatically.</p>
+<p>It must be added to a <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a>, such as the <a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>,
+to enabled all features.</p>
+<dl class="method">
+<dt id="_rules.FluidRule.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#FluidRule.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.FluidRule.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> &#8211; passed to <a class="reference internal" href="#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a> and <a class="reference internal" href="#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="_rules.QuickFluidRules">
+<em class="property">class </em><code class="descname">QuickFluidRules</code><span class="sig-paren">(</span><em>grammar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#QuickFluidRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.QuickFluidRules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used like a <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#mappingrule-class">MappingRule</a> but results in <a class="reference internal" href="#_rules.FluidRule" title="_rules.FluidRule"><code class="xref any py py-class docutils literal"><span class="pre">FluidRule</span></code></a>&#8216;s rather than simple
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#compoundrule-class">CompoundRule</a>&#8216;s.</p>
+<p>The <code class="docutils literal"><span class="pre">mapping</span></code> attribute is extended. In addition to the normal key/value
+pairs of spec/action, a value may also be a list or tuple whose first
+element is the usual action, and whose second element is a dict of
+parameters to be passed as **kwargs to <a class="reference internal" href="#_rules.QuickFluidRule" title="_rules.QuickFluidRule"><code class="xref any py py-class docutils literal"><span class="pre">QuickFluidRule</span></code></a>.</p>
+<dl class="method">
+<dt id="_rules.QuickFluidRules.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>grammar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#QuickFluidRules.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.QuickFluidRules.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not usually called directly, but rather via <a class="reference internal" href="Decorators.html#_decorators.ActiveGrammarRule" title="_decorators.ActiveGrammarRule"><code class="xref any py py-func docutils literal"><span class="pre">ActiveGrammarRule</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>grammar</strong> &#8211; The Grammar to add rules to, generally a
+<a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a> such as the <a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="_rules.RegisteredRule">
 <em class="property">class </em><code class="descname">RegisteredRule</code><span class="sig-paren">(</span><em>intros=None</em>, <em>intros_spec=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#RegisteredRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.RegisteredRule" title="Permalink to this definition">¶</a></dt>
 <dd><p>A rule that can undergo <a class="reference internal" href="Concepts.html#registration"><span>registration</span></a> to allow its command
 to be noticed in the middle of an utterance, allowing other commands to
-pass off to this rule. It must be added to a <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code>, such as the
-<code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>, for the registration to actually be performed. Otherwise,
+pass off to this rule. It must be added to a <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a>, such as the
+<a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a>, for the registration to actually be performed. Otherwise,
 it acts like a normal <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#compoundrule-class">CompoundRule</a>.</p>
 <dl class="method">
 <dt id="_rules.RegisteredRule.__init__">
@@ -170,10 +220,9 @@ intros for the command, similar in manner to how spec is parsed.</li>
 <dl class="class">
 <dt id="_rules.ContinuingRule">
 <em class="property">class </em><code class="descname">ContinuingRule</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#ContinuingRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.ContinuingRule" title="Permalink to this definition">¶</a></dt>
-<dd><p>A rule that looks for embedded commands and passes off to
-them. It must be added to a <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code>, such as the
-<code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>, to use as the source of registered commands,
-otherwise, it acts like a normal <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#compoundrule-class">CompoundRule</a>.</p>
+<dd><p>A rule that automatically looks for <a class="reference internal" href="Glossary.html#term-embedded-command"><span class="xref std std-term">embedded commands</span></a> and <a class="reference internal" href="Glossary.html#term-chaining"><span class="xref std std-term">chains</span></a> to
+them. It must be added to a <a class="reference internal" href="Grammars.html#_grammars.RegistryGrammar" title="_grammars.RegistryGrammar"><code class="xref any py py-class docutils literal"><span class="pre">RegistryGrammar</span></code></a>, such as the
+<a class="reference internal" href="Grammars.html#_grammars.GlobalRegistry" title="_grammars.GlobalRegistry"><code class="xref any py py-class docutils literal"><span class="pre">GlobalRegistry</span></code></a> to enable all features.</p>
 <dl class="method">
 <dt id="_rules.ContinuingRule.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#ContinuingRule.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.ContinuingRule.__init__" title="Permalink to this definition">¶</a></dt>
@@ -190,32 +239,10 @@ otherwise, it acts like a normal <a class="reference external" href="http://drag
 </dd></dl>
 
 <dl class="class">
-<dt id="_rules.FluidRule">
-<em class="property">class </em><code class="descname">FluidRule</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#FluidRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.FluidRule" title="Permalink to this definition">¶</a></dt>
-<dd><p>A FluidRule is both a <a class="reference internal" href="#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a> and a <a class="reference internal" href="#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a>, meaning it
-can be passed off to from other commands, and then pass off to further
-commands. This is the most common case, unless you have specific needs.
-It must be added to a <code class="xref any docutils literal"><span class="pre">RegistryGrammar</span></code>, such as the <code class="xref any docutils literal"><span class="pre">GlobalRegistry</span></code>,
-otherwise, it acts like a normal <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/rules.html#compoundrule-class">CompoundRule</a>.</p>
-<dl class="method">
-<dt id="_rules.FluidRule.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#FluidRule.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.FluidRule.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> &#8211; passed to <a class="reference internal" href="#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a> and <a class="reference internal" href="#_rules.RegisteredRule" title="_rules.RegisteredRule"><code class="xref any py py-class docutils literal"><span class="pre">RegisteredRule</span></code></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="_rules.QuickFluidRule">
 <em class="property">class </em><code class="descname">QuickFluidRule</code><span class="sig-paren">(</span><em>spec</em>, <em>action</em>, <em>args={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_rules.html#QuickFluidRule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#_rules.QuickFluidRule" title="Permalink to this definition">¶</a></dt>
-<dd><p>A shortcut to assign an <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/actions.html">action</a> to a spec.</p>
+<dd><p>Bases: <a class="reference internal" href="#_rules.FluidRule" title="_rules.FluidRule"><code class="xref py py-class docutils literal"><span class="pre">_rules.FluidRule</span></code></a></p>
+<p>A shortcut to assign an <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/actions.html">action</a> to a spec.</p>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">rule</span> <span class="o">=</span> <span class="n">QuickFluidRule</span><span class="p">(</span><span class="s">&quot;press home key&quot;</span><span class="p">,</span> <span class="n">Key</span><span class="p">(</span><span class="s">&quot;home&quot;</span><span class="p">))</span>
 </pre></div>
@@ -237,7 +264,7 @@ function callbacks. The callbacks are supplied a single parameter
 of a dictionary of extras, and their return value is assigned to
 the extra named by the key. When the <code class="docutils literal"><span class="pre">action</span></code> is executed, it
 will then have these final values available to it.</li>
-<li><strong>**kwargs</strong> &#8211; Passed to FluidRule, except <code class="docutils literal"><span class="pre">&quot;name&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;spec&quot;</span></code>
+<li><strong>**kwargs</strong> &#8211; Passed to <a class="reference internal" href="#_rules.FluidRule" title="_rules.FluidRule"><code class="xref any py py-class docutils literal"><span class="pre">FluidRule</span></code></a>, except <code class="docutils literal"><span class="pre">&quot;name&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;spec&quot;</span></code>
 ignored.</li>
 </ul>
 </td>

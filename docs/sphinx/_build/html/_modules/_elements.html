@@ -80,10 +80,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Concepts.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Elements.html">Elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Rules.html">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -135,7 +136,12 @@
 <span class="kn">from</span> <span class="nn">dragonfluid._support</span> <span class="kn">import</span> <span class="n">_safe_kwargs</span>
 
 
-<div class="viewcode-block" id="SplitDictation"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation">[docs]</a><span class="k">class</span> <span class="nc">SplitDictation</span><span class="p">(</span><span class="n">Dictation</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_RegistryElement</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># An internal object used to indicate that the element has a _registry</span>
+    <span class="c"># attribute due to its use of Registry services</span>
+    <span class="k">pass</span>
+
+<div class="viewcode-block" id="SplitDictation"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation">[docs]</a><span class="k">class</span> <span class="nc">SplitDictation</span><span class="p">(</span><span class="n">_RegistryElement</span><span class="p">,</span> <span class="n">Dictation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A rule element used to split recognized dictation into an initial free</span>
 <span class="sd">    dictation part, and a following command part. Either part is optional,</span>
@@ -197,16 +203,17 @@
 <span class="sd">    literal tags stripped, but otherwise be unmodified.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="SplitDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span>
+<div class="viewcode-block" id="SplitDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">forced_dictation</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Here is a test.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param string name: The name of this element, used as the keyname in the</span>
 <span class="sd">            extras dictionary passed back to _process_recognition</span>
-<span class="sd">        :param _Registry registry: The _Registry instance that determines what</span>
-<span class="sd">            words form a command</span>
-<span class="sd">        :param Boolean forced_dictation: When True, refuses to recognize</span>
+<span class="sd">        :param `Registry` registry: The `Registry` instance that determines what</span>
+<span class="sd">            words form a command and what literal tags are in effect. If None,</span>
+<span class="sd">            the `ActiveGrammarRule` decorator will set the registry of any</span>
+<span class="sd">            `RegistryGrammar` derived instance the containing rule is added to.</span>
+<span class="sd">        :param bool forced_dictation: When True, refuses to recognize</span>
 <span class="sd">            utterance-initial commands, so as to ensure this element returns</span>
 <span class="sd">            non-empty free dictation.</span>
 <span class="sd">        :param kwargs: Passed safely to Dictation.__init__</span>
@@ -216,10 +223,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_forced_dictation</span> <span class="o">=</span> <span class="n">forced_dictation</span>
         <span class="n">_safe_kwargs</span><span class="p">(</span><span class="n">Dictation</span><span class="o">.</span><span class="n">__init__</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     </div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">registry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">registry</span>
+    
+    <span class="nd">@registry.setter</span>
+    <span class="k">def</span> <span class="nf">registry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">value</span>
+    
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c"># The element instance lives on between invocations of the rule in</span>
+        <span class="c"># which it lives. This value method is called from each invocation to</span>
+        <span class="c"># obtain the *current* value. Therefore below we reset any state so</span>
+        <span class="c"># that elements retrieved respect the `node` passed in.</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">_node</span> <span class="o">=</span> <span class="n">node</span> <span class="c"># store the context node from which to parse values</span>
         <span class="c"># clear memoize variables of any previous values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_words_list_memo</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list_memo</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span> <span class="bp">self</span>
     
@@ -233,10 +256,10 @@
 <span class="sd">        is non-empty.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command_index_memo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>        
-            <span class="n">command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">)</span>
+            <span class="n">command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forced_dictation</span> <span class="ow">and</span> <span class="n">command_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c"># do not allow empty dictation bypass utterance-initial command</span>
-                <span class="n">next_command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">next_command_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">_determine_command_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatted_words_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
                 <span class="k">if</span> <span class="n">next_command_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">command_index</span> <span class="o">=</span> <span class="n">next_command_index</span> <span class="o">+</span> <span class="mi">1</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -247,16 +270,21 @@
     
 <div class="viewcode-block" id="SplitDictation.translate"><a class="viewcode-back" href="../Elements.html#_elements.SplitDictation.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words_iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a word list, as translated.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">translate_literals</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>    
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">translate_literals</span><span class="p">(</span><span class="n">words_iterable</span><span class="p">)</span>    
     </div>
     <span class="k">def</span> <span class="nf">mimic_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span>
+        <span class="k">if</span> <span class="n">command</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">mimic_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>    
+        <span class="n">full</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span>
+        <span class="k">if</span> <span class="n">full</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">mimic</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>    
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `full_notrans`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_notrans</span>
     
     <span class="nd">@property</span>
@@ -277,6 +305,7 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">full_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `full_words_notrans`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span>
     
     <span class="nd">@property</span>
@@ -297,6 +326,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">full_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `full_container_notrans`.&quot;&quot;&quot;</span> 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_container_notrans</span>
     
     <span class="nd">@property</span>
@@ -315,13 +345,14 @@
 <span class="sd">        appropriate type given the speech recognition system in use, with no</span>
 <span class="sd">        formatting applied yet with literal tags translated to their intended result. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_words_notrans</span><span class="p">)</span>
         <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()</span>
         <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dictation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `dictation_trans`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_trans</span>
     
     <span class="nd">@property</span>
@@ -343,7 +374,8 @@
         <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dictation_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>      
+    <span class="k">def</span> <span class="nf">dictation_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `dictation_words_trans`.&quot;&quot;&quot;</span>    
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_trans</span>
     
     <span class="nd">@property</span>
@@ -366,6 +398,7 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dictation_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `dictation_container_trans`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictation_container_trans</span>
     
     <span class="nd">@property</span>
@@ -386,13 +419,14 @@
 <span class="sd">        given the speech recognition system in use, with no formatting applied</span>
 <span class="sd">        yet with literal tags translated to their intended result.   </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dictation_words_notrans</span><span class="p">)</span>
         <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[:</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">]</span>
         <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `command_notrans`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_notrans</span>
     
     <span class="nd">@property</span>
@@ -415,6 +449,7 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">command_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `command_words_notrans`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span>
 
     <span class="nd">@property</span>
@@ -437,6 +472,7 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">command_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alias for `command_container_notrans`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_container_notrans</span>
 
     <span class="nd">@property</span>
@@ -457,7 +493,7 @@
 <span class="sd">        type given the speech recognition system in use, with no formatting</span>
 <span class="sd">        applied yet with literal tags translated to their intended result.  </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span><span class="p">)</span>
+        <span class="n">tag_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">_get_literal_tag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_words_notrans</span><span class="p">)</span>
         <span class="n">notrans_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">command_index</span><span class="p">:]</span>
         <span class="n">translated_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">notrans_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notrans_words</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_indices</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">DictationContainer</span><span class="p">(</span><span class="n">translated_words</span><span class="p">)</span>    
@@ -475,8 +511,17 @@
 <span class="sd">    a value for dictation, even if it must ignore an utterance-initial command</span>
 <span class="sd">    from which to provide it.  </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="SplitForcedDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitForcedDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">GlobalRegistry</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;kwargs passed to SplitDictation&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SplitForcedDictation.__init__"><a class="viewcode-back" href="../Elements.html#_elements.SplitForcedDictation.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param string name: The name of this element, used as the keyname in the</span>
+<span class="sd">            extras dictionary passed back to _process_recognition</span>
+<span class="sd">        :param _Registry registry: The _Registry instance that determines what</span>
+<span class="sd">            words form a command</span>
+<span class="sd">        :param kwargs: Passed safely to `SplitDictation`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
         <span class="c"># ensure only one forced_dictation argument passed</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;forced_dictation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="n">SplitDictation</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">registry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>

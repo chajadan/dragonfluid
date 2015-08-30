@@ -80,10 +80,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Concepts.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts.html#translation">Translation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../PubliclySupported.html">Publicly Supported Objects</a></li>
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Elements.html">Elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Rules.html">Rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Decorators.html">Decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
 </ul>
 
           
@@ -185,10 +186,10 @@
 </div></div>
 <div class="viewcode-block" id="ContinuingRule"><a class="viewcode-back" href="../Rules.html#_rules.ContinuingRule">[docs]</a><span class="k">class</span> <span class="nc">ContinuingRule</span><span class="p">(</span><span class="n">_RegistryRule</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A rule that looks for embedded commands and passes off to</span>
+<span class="sd">    A rule that automatically looks for :term:`embedded commands &lt;embedded</span>
+<span class="sd">    command&gt;` and :term:`chains &lt;chaining&gt;` to</span>
 <span class="sd">    them. It must be added to a `RegistryGrammar`, such as the</span>
-<span class="sd">    `GlobalRegistry`, to use as the source of registered commands,</span>
-<span class="sd">    otherwise, it acts like a normal CompoundRule_.</span>
+<span class="sd">    `GlobalRegistry` to enable all features.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
 <div class="viewcode-block" id="ContinuingRule.__init__"><a class="viewcode-back" href="../Rules.html#_rules.ContinuingRule.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;        </span>
@@ -210,67 +211,86 @@
 
         <span class="n">_original_process_recognition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_recognition</span><span class="o">.</span><span class="n">im_func</span>
         
-        <span class="k">def</span> <span class="nf">_flowall_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_extraadded_flowfull_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">):</span>
             <span class="n">_original_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">)</span>
-            <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span><span class="o">.</span><span class="n">mimic_full</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span> <span class="ow">in</span> <span class="n">extras</span><span class="p">:</span> <span class="c"># optional, so maybe not</span>
+                <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span><span class="o">.</span><span class="n">mimic_full</span><span class="p">()</span>
             
         <span class="k">def</span> <span class="nf">_flowcommand_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">):</span>
             <span class="n">_original_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">)</span>
-            <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span><span class="o">.</span><span class="n">mimic_command</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span> <span class="ow">in</span> <span class="n">extras</span><span class="p">:</span> <span class="c"># perhaps optional</span>
+                <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span><span class="o">.</span><span class="n">mimic_command</span><span class="p">()</span>
             
         <span class="k">def</span> <span class="nf">_autoflowcommand_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">):</span>
-            <span class="n">flow_element</span> <span class="o">=</span> <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span>
-            <span class="c"># replace the extra transparently with exactly what a user expects</span>
-            <span class="c"># from a Dictation element</span>
-            <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_element</span><span class="o">.</span><span class="n">dictation_container_trans</span>
+            <span class="n">flow_element</span> <span class="o">=</span> <span class="n">extras</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flow_element</span><span class="p">:</span>
+                <span class="c"># replace the extra transparently with exactly what a user</span>
+                <span class="c"># expects from a Dictation element, a normal container rather</span>
+                <span class="c"># than our meta-container</span>
+                <span class="n">extras</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_element</span><span class="o">.</span><span class="n">dictation_container_trans</span>
             <span class="n">_original_process_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">extras</span><span class="p">)</span>
-            <span class="n">flow_element</span><span class="o">.</span><span class="n">mimic_command</span><span class="p">()</span>          
+            <span class="k">if</span> <span class="n">flow_element</span><span class="p">:</span>
+                <span class="n">flow_element</span><span class="o">.</span><span class="n">mimic_command</span><span class="p">()</span>          
 
         <span class="n">_extras</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">extra</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">extra</span><span class="p">)</span> <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">_extras</span><span class="p">)</span>
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
             <span class="sd">r&quot;&quot;&quot;</span>
 <span class="sd">            .*                      # any beginning</span>
-<span class="sd">            \[?\s*                  # possibly optional</span>
-<span class="sd">            &lt;(?P&lt;extra_tail&gt;.*?)&gt;   # capture extra name as extra_tail</span>
-<span class="sd">            \s*\]?\s*</span>
-<span class="sd">            $                       # at the very end of spec </span>
+<span class="sd">            \[?\s*                  # possibly optional extra</span>
+<span class="sd">            &lt;(?P&lt;final_extra&gt;.*?)&gt;  # capture extra name as final_extra</span>
+<span class="sd">            \s*\]?\s*               # with possible end optional indicator</span>
+<span class="sd">            $                       # at the very end of spec</span>
 <span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">_spec</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-            <span class="n">extra_name</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;extra_tail&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span> <span class="c"># spec ends with an extra</span>
+            <span class="n">extra_name</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;final_extra&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_extras</span><span class="p">[</span><span class="n">extra_name</span><span class="p">],</span> <span class="n">SplitDictation</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_process_recognition</span> <span class="o">=</span> <span class="n">_flowcommand_process_recognition</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_extras</span><span class="p">[</span><span class="n">extra_name</span><span class="p">],</span> <span class="n">Dictation</span><span class="p">):</span>
                 <span class="n">_extras</span><span class="p">[</span><span class="n">extra_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">SplitForcedDictation</span><span class="p">(</span><span class="n">extra_name</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_process_recognition</span> <span class="o">=</span> <span class="n">_autoflowcommand_process_recognition</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_spec</span><span class="p">,</span> <span class="n">extra_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_flow_element</span><span class="p">(</span><span class="n">_spec</span><span class="p">,</span> <span class="n">_extras</span><span class="p">,</span> <span class="n">_extraadded_flowfull_process_recognition</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">extra_name</span> <span class="o">=</span> <span class="s">&quot;fluid&quot;</span>
-            <span class="k">while</span> <span class="n">extra_name</span> <span class="ow">in</span> <span class="n">_extras</span><span class="p">:</span>
-                <span class="n">extra_name</span> <span class="o">+=</span> <span class="s">&quot;fluid&quot;</span>
-            <span class="n">_spec</span> <span class="o">+=</span> <span class="s">&quot; [&lt;&quot;</span> <span class="o">+</span> <span class="n">extra_name</span> <span class="o">+</span> <span class="s">&quot;&gt;]&quot;</span>
-            <span class="n">_extras</span><span class="p">[</span><span class="n">extra_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">SplitDictation</span><span class="p">(</span><span class="n">extra_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_process_recognition</span> <span class="o">=</span> <span class="n">_flowall_process_recognition</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">_spec</span><span class="p">,</span> <span class="n">extra_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_flow_element</span><span class="p">(</span><span class="n">_spec</span><span class="p">,</span> <span class="n">_extras</span><span class="p">,</span> <span class="n">_extraadded_flowfull_process_recognition</span><span class="p">)</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">_flow_element</span> <span class="o">=</span> <span class="n">extra_name</span>
         
         <span class="n">_extras</span> <span class="o">=</span> <span class="n">_extras</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">_spec</span><span class="p">,</span> <span class="n">_extras</span>
+    
+    <span class="k">def</span> <span class="nf">_add_flow_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_spec</span><span class="p">,</span> <span class="n">_extras</span><span class="p">,</span> <span class="n">_extraadded_flowfull_process_recognition</span><span class="p">):</span>
+        <span class="n">extra_name</span> <span class="o">=</span> <span class="s">&quot;fluid&quot;</span>
+        <span class="k">while</span> <span class="n">extra_name</span> <span class="ow">in</span> <span class="n">_extras</span><span class="p">:</span>
+            <span class="n">extra_name</span> <span class="o">+=</span> <span class="s">&quot;fluid&quot;</span>
+        <span class="n">_spec</span> <span class="o">+=</span> <span class="s">&quot; [&lt;&quot;</span> <span class="o">+</span> <span class="n">extra_name</span> <span class="o">+</span> <span class="s">&quot;&gt;]&quot;</span>
+        <span class="n">_extras</span><span class="p">[</span><span class="n">extra_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">SplitDictation</span><span class="p">(</span><span class="n">extra_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_recognition</span> <span class="o">=</span> <span class="n">_extraadded_flowfull_process_recognition</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_spec</span><span class="p">,</span> <span class="n">extra_name</span>
 
 </div>
 <div class="viewcode-block" id="FluidRule"><a class="viewcode-back" href="../Rules.html#_rules.FluidRule">[docs]</a><span class="k">class</span> <span class="nc">FluidRule</span><span class="p">(</span><span class="n">RegisteredRule</span><span class="p">,</span> <span class="n">ContinuingRule</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A FluidRule is both a `RegisteredRule` and a `ContinuingRule`, meaning it</span>
-<span class="sd">    can be passed off to from other commands, and then pass off to further</span>
-<span class="sd">    commands. This is the most common case, unless you have specific needs.</span>
+<span class="sd">    can be :term:`chained &lt;chaining&gt;` to from other commands, and then chain off</span>
+<span class="sd">    to further commands. This is the most common case, for general use unless</span>
+<span class="sd">    you have specific needs. These always attempt to chain automatically.</span>
+
 <span class="sd">    It must be added to a `RegistryGrammar`, such as the `GlobalRegistry`,</span>
-<span class="sd">    otherwise, it acts like a normal CompoundRule_.</span>
+<span class="sd">    to enabled all features.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FluidRule.__init__"><a class="viewcode-back" href="../Rules.html#_rules.FluidRule.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;        </span>
 <span class="sd">        :param \*\*kwargs: passed to `ContinuingRule` and `RegisteredRule`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c"># setup ContinuingRule first as it may alter the spec to be registered</span>
-        <span class="n">ContinuingRule</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c"># setup RegisteredRule first, as it only needs the intros fully</span>
+        <span class="c"># determined and ContinuingRule does not alter the intros, whereas</span>
+        <span class="c"># ContinuingRule alters the extras in necessary ways, so these</span>
+        <span class="c"># changes must not be undone by the original extras value in kwargs,</span>
+        <span class="c"># which would occur RegisteredRule was called after.</span>
         <span class="n">RegisteredRule</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ContinuingRule</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 </div></div>
 <span class="k">class</span> <span class="nc">_BaseQuickRules</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -305,7 +325,7 @@
 <span class="sd">            of a dictionary of extras, and their return value is assigned to</span>
 <span class="sd">            the extra named by the key. When the ``action`` is executed, it</span>
 <span class="sd">            will then have these final values available to it.</span>
-<span class="sd">        :param \*\*kwargs: Passed to FluidRule, except ``&quot;name&quot;`` and ``&quot;spec&quot;``</span>
+<span class="sd">        :param \*\*kwargs: Passed to `FluidRule`, except ``&quot;name&quot;`` and ``&quot;spec&quot;``</span>
 <span class="sd">            ignored.</span>
 <span class="sd">        </span>
 <span class="sd">        </span>
@@ -319,10 +339,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;spec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec</span>
-        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_auto_name</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autogenerate_name</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
         <span class="n">FluidRule</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     </div>
-    <span class="k">def</span> <span class="nf">_get_auto_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_autogenerate_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
         <span class="n">id_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">QuickFluidRule</span><span class="o">.</span><span class="n">_next_unique_id</span><span class="p">)</span>
         <span class="n">QuickFluidRule</span><span class="o">.</span><span class="n">_next_unique_id</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="s">&quot;quickFluidRule_&quot;</span> <span class="o">+</span> <span class="n">spec</span> <span class="o">+</span> <span class="s">&quot;_id&quot;</span> <span class="o">+</span> <span class="n">id_string</span>
@@ -338,8 +358,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">extras</span><span class="p">)</span>
 
 </div>
-<span class="k">class</span> <span class="nc">QuickFluidRules</span><span class="p">(</span><span class="n">_BaseQuickRules</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grammar</span><span class="p">):</span>
+<div class="viewcode-block" id="QuickFluidRules"><a class="viewcode-back" href="../Rules.html#_rules.QuickFluidRules">[docs]</a><span class="k">class</span> <span class="nc">QuickFluidRules</span><span class="p">(</span><span class="n">_BaseQuickRules</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used like a MappingRule_ but results in `FluidRule`&#39;s rather than simple</span>
+<span class="sd">    CompoundRule_\ &#39;s.</span>
+<span class="sd">    </span>
+<span class="sd">    The ``mapping`` attribute is extended. In addition to the normal key/value</span>
+<span class="sd">    pairs of spec/action, a value may also be a list or tuple whose first</span>
+<span class="sd">    element is the usual action, and whose second element is a dict of</span>
+<span class="sd">    parameters to be passed as \*\*kwargs to `QuickFluidRule`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="QuickFluidRules.__init__"><a class="viewcode-back" href="../Rules.html#_rules.QuickFluidRules.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grammar</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not usually called directly, but rather via `ActiveGrammarRule`.</span>
+<span class="sd">        </span>
+<span class="sd">        :param grammar: The Grammar to add rules to, generally a</span>
+<span class="sd">            `RegistryGrammar` such as the `GlobalRegistry`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_BaseQuickRules</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grammar</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">spec</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -351,7 +386,7 @@
                 <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">action</span> <span class="o">=</span> <span class="n">entry</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">QuickFluidRule</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">QuickFluidRule</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div></div>
 </pre></div>
 
           </div>

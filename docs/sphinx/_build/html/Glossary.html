@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Glossary &mdash; dragonfluid 0.9.0.a1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="dragonfluid 0.9.0.a1 documentation" href="index.html"/>
+        <link rel="prev" title="Decorators" href="Decorators.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> dragonfluid
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#it-s-not-for-everyone">It&#8217;s Not For Everyone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#how-to-speak">How To Speak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#registration">Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#intros">Intros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#literalization">Literalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Concepts.html#translation">Translation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PubliclySupported.html">Publicly Supported Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grammars.html">Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Elements.html">Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rules.html">Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decorators.html">Decorators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Glossary</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">dragonfluid</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Glossary.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-chaining">chaining</dt>
+<dd><p class="first">The ability to invoke multiple recognition elements in a row by speaking
+them as a single <a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a>, i.e. without pausing between them.
+In dragonfluid, chains may be of any length.
+Depending on the scenario, two neighboring chained elements may be
+comprised of free speech dictation and a command, in either order, or a
+pair of commands.</p>
+<p class="last">Only rules derived from <a class="reference internal" href="Rules.html#_rules.ContinuingRule" title="_rules.ContinuingRule"><code class="xref any py py-class docutils literal"><span class="pre">ContinuingRule</span></code></a> will pass off, or chain, to
+successive commands.</p>
+</dd>
+<dt id="term-command-action">command action</dt>
+<dd>The action executed when a <a class="reference internal" href="#term-rule"><span class="xref std std-term">rule</span></a> is triggered by its
+<a class="reference internal" href="#term-command"><span class="xref std std-term">command</span></a>.</dd>
+<dt id="term-command">command</dt>
+<dd>Spoken content within an <a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a> that is meant to trigger the
+execution of a <a class="reference internal" href="#term-command-action"><span class="xref std std-term">command action</span></a>. Often specified in the form of a
+<a class="reference internal" href="#term-spec"><span class="xref std std-term">spec</span></a>. In contrast with <a class="reference internal" href="#term-dictation"><span class="xref std std-term">dictation</span></a>.</dd>
+<dt id="term-dictation"><span id="term-free-speech-dictation"></span>dictation<br />free speech dictation</dt>
+<dd>Spoken content within an <a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a> that is meant to be captured
+as its textual representation, generally as a means to supply content to
+a <a class="reference internal" href="#term-command-action"><span class="xref std std-term">command action</span></a>, such as for printing to the screen. In
+contrast with a <a class="reference internal" href="#term-command"><span class="xref std std-term">command</span></a>.</dd>
+<dt id="term-dictation-container">dictation container</dt>
+<dd>A type of value produced by a <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/elements.html#dragonfly.grammar.elements_basic.Dictation" title="(in Dragonfly v0.6)"><code class="xref any docutils literal"><span class="pre">Dictation</span></code></a> element, derived from
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/engines.html#dragonfly.engines.base.dictation.DictationContainerBase" title="(in Dragonfly v0.6)"><code class="xref any docutils literal"><span class="pre">DictationContainerBase</span></code></a>, and specific
+to the speech recognition system in use. The elements provided by
+dragonfluid, such a <a class="reference internal" href="Elements.html#_elements.SplitDictation" title="_elements.SplitDictation"><code class="xref any py py-class docutils literal"><span class="pre">SplitDictation</span></code></a> can also return these containers
+upon request.</dd>
+<dt id="term-embedded-command">embedded command</dt>
+<dd>A <a class="reference internal" href="#term-command"><span class="xref std std-term">command</span></a> within an <a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a> that does not occur at the
+beginning of the utterance.</dd>
+<dt id="term-extras">extras</dt>
+<dd><p class="first">Broadly speaking, an extra is a part of a command that hears and results
+in a certain type of content.</p>
+<p>An extra uses a named element, derived from
+<a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/elements.html#dragonfly.grammar.elements_basic.ElementBase" title="(in Dragonfly v0.6)"><code class="xref any docutils literal"><span class="pre">ElementBase</span></code></a>,
+and provides a value, such as text or a <a class="reference internal" href="#term-dictation-container"><span class="xref std std-term">dictation container</span></a>.
+Dragonfly documentation provides <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/elements.html#refelementclasses" title="(in Dragonfly v0.6)"><span class="xref std std-ref">a list of elements</span></a>.</p>
+<p class="last">It is often used here as a term for the dictionary of extras passed
+to the _process_recognition callback of a rule. You are generally
+expected to know how to access the various extras from this dictionary,
+and when documentation states that extras are passed to or returned from
+a function, the form implied is this dictionary. Note that this
+dictionary generally does not container the underlying element that
+generates a value, so extras are distinct from elements, with extras
+using elements and producing values under the same name.</p>
+</dd>
+<dt id="term-intro"><span id="term-command-intro"></span>intro<br />command intro</dt>
+<dd>The initial part of a command&#8217;s <a class="reference internal" href="#term-spec"><span class="xref std std-term">spec</span></a>, consisting only of static
+literal words, up to the first encountered <a class="reference internal" href="#term-extras"><span class="xref std std-term">extra</span></a>
+reference in angle brackets. For further details see the <a class="reference internal" href="Concepts.html#intros"><span>intros</span></a> concept section.</dd>
+<dt id="term-literal-tag">literal tag</dt>
+<dd>A word spoken within an <a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a> to specific that what follows
+is <a class="reference internal" href="#term-free-speech-dictation"><span class="xref std std-term">free speech dictation</span></a> even when it looks a <a class="reference internal" href="#term-command"><span class="xref std std-term">command</span></a>
+or literal tag. For further details see the <a class="reference internal" href="Concepts.html#literalization"><span>literalization</span></a> concept section.</dd>
+<dt id="term-registered-command">registered command</dt>
+<dd>A command that can be triggered from within the middle of an
+<a class="reference internal" href="#term-utterance"><span class="xref std std-term">utterance</span></a>. For further details see the <a class="reference internal" href="Concepts.html#registration"><span>registration</span></a> concept section.</dd>
+<dt id="term-rule"><span id="term-macro"></span>rule<br />macro</dt>
+<dd>A triggerable event. The trigger is the <a class="reference internal" href="#term-command"><span class="xref std std-term">command</span></a> and the event
+triggered is the <a class="reference internal" href="#term-command-action"><span class="xref std std-term">command action</span></a>.</dd>
+<dt id="term-spec">spec</dt>
+<dd>A common <a class="reference external" href="http://dragonfly.readthedocs.org/en/latest/">dragonfly</a> attribute that determines which spoken
+words will trigger a <a class="reference internal" href="#term-rule"><span class="xref std std-term">rule</span></a>. It may be a fixed literal command
+spec, such as &#8220;show desktop&#8221;, or it may include references to
+<a class="reference internal" href="#term-extras"><span class="xref std std-term">extras</span></a> in angle brackets, such as &#8220;delete left &lt;characterCount&gt;
+characters&#8221;.</dd>
+<dt id="term-utterance">utterance</dt>
+<dd>The contiguous stream of spoken content captured by your speech
+recognition system starting from the moment your it determines you have
+begun speaking through until the moment it encounters enough silence to
+qualify as a pause given its configuration.</dd>
+</dl>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Decorators.html" class="btn btn-neutral" title="Decorators" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright .
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9.0.a1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
