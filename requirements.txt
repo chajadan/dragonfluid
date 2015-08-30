@@ -1,1 +1,1 @@
--e hg+http://pywin32.hg.sourceforge.net/hgweb/pywin32/pywin32/#egg=pywin32
+-e git+http://github.com/t4ngo/dragonfly/#egg=dragonfly
