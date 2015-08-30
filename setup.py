@@ -1,7 +1,3 @@
-# ensure setuptools is available
-import ez_setup
-ez_setup.use_setuptools()
-
 from setuptools import setup
 import os
 import codecs
