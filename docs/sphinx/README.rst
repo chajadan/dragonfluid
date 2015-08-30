@@ -35,8 +35,16 @@ Quick Start
 
 The easiest way to give it a whirl is to:
 
-- use ``pip install dragonfluid`` to install dragonfluid,
-- import the following objects into your code,
+- use ``pip install dragonfluid`` from the command line to install dragonfluid,
+  if Python pip is on your path, otherwise it can be located in the Scripts
+  folder of your Python installation or downloaded. For help installing with
+  pip, look `here <https://pip.pypa.io/en/latest/installing.html>`_.  
+- or download and unzip a release from `here
+  <https://pypi.python.org/pypi/dragonfluid>`_ and from the command line run the
+  setup script using ``python setup.py install`` assuming python.exe is on
+  your path. For help installing, look `here
+  <https://docs.python.org/2/install/>`_.
+- once installed, import the following objects into your code,
 
 ::
 
