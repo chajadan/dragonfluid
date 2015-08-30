@@ -104,6 +104,12 @@ class Registry(object):
         self._command_partials.subtract(partials)
     
     def is_registered(self, intro):
+        """
+        :param string command_intro: A command :term:`intro` to test for
+            `registration <registration>`.
+        :returns: True if registered, False otherwise
+        :rtype: bool
+        """ 
         return self._registered_commands[intro] > 0
     
     def has_partial(self, partial_command):
