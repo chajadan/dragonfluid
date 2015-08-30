@@ -54,10 +54,10 @@ class RegisteredRule(_RegistryRule):
 
 class ContinuingRule(_RegistryRule):
     """
-    A rule that looks for embedded commands and passes off to
+    A rule that automatically looks for :term:`embedded commands <embedded
+    command>` and :term:`chains <chaining>` to
     them. It must be added to a `RegistryGrammar`, such as the
-    `GlobalRegistry`, to use as the source of registered commands,
-    otherwise, it acts like a normal CompoundRule_.
+    `GlobalRegistry` to enable all features.
     """    
     def __init__(self, **kwargs):
         """        
@@ -140,10 +140,12 @@ class ContinuingRule(_RegistryRule):
 class FluidRule(RegisteredRule, ContinuingRule):
     """
     A FluidRule is both a `RegisteredRule` and a `ContinuingRule`, meaning it
-    can be passed off to from other commands, and then pass off to further
-    commands. This is the most common case, unless you have specific needs.
+    can be :term:`chained <chaining>` to from other commands, and then chain off
+    to further commands. This is the most common case, for general use unless
+    you have specific needs. These always attempt to chain automatically.
+
     It must be added to a `RegistryGrammar`, such as the `GlobalRegistry`,
-    otherwise, it acts like a normal CompoundRule_.
+    to enabled all features.
     """
     def __init__(self, **kwargs):
         """        
@@ -237,6 +239,7 @@ class QuickFluidRules(_BaseQuickRules):
     def __init__(self, grammar):
         """
         Not usually called directly, but rather via `ActiveGrammarRule`.
+        
         :param grammar: The Grammar to add rules to, generally a
             `RegistryGrammar` such as the `GlobalRegistry`.
         """
