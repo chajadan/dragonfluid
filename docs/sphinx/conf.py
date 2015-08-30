@@ -33,7 +33,7 @@ if on_read_the_docs:
         @classmethod
         def __getattr__(cls, name):
             return Mock()
-    mock_modules = ["ctypes", "ctypes.wintypes", "pythoncom",
+    mock_modules = ["ctypes", "ctypes.wintypes", "logging", "logging.handlers" "pythoncom",
                     "pywintypes", "win32api", "win32clipboard",
                     "win32com", "win32com.client",
                     "win32com.client.gencache", "win32com.gen_py", 

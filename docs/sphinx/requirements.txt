@@ -1,2 +1,1 @@
 mock
--e git+http://github.com/t4ngo/dragonfly/#egg=dragonfly
