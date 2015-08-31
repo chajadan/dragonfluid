@@ -1,2 +1,5 @@
 mock
+
+# custom dragonfly version without pywin32 requirement to allow ReadTheDocs
+# build
 -e git+http://github.com/chajadan/dragonfly/@docs_enabler#egg=dragonfly
