@@ -59,7 +59,10 @@ class RegisteredRule(_RegistryRule):
         if isinstance(self._intros, six.string_types):
                 self._intros = [self._intros]
         self._intros_spec = _first_not_none(intros_spec, getattr(self, "intros_spec", None))
-        _RegistryRule.__init__(self, **kwargs)
+        
+        # avoid duplicate processing to speed load time
+        if not isinstance(self, FluidRule):
+            _RegistryRule.__init__(self, **kwargs)
 
 
 class ContinuingRule(_RegistryRule):
