@@ -131,6 +131,8 @@ class Registry(object):
                 words_iterator.next()
                 continue
             
+            if running_match:
+                running_match += " "
             running_match += word
             if self.is_registered(running_match):
                 return True
